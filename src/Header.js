@@ -31,15 +31,17 @@ class Header extends Component {
           <div className="avatar"
             style={{ backgroundImage: `url(${this.state.user.photoURL || ''})` }}
             onClick={this.props.onAvaClick}>
-            <div className="logout-popup"
-              onClick={ () => {
+            <div className="popup"
+              style={{ visibility: this.props.popup }}>
+              <div className="popup-name">{ this.state.user.displayName }</div>
+              <div className="popup-sign-out" onClick={ () => {
                 firebase.auth().signOut().then(() => {
                   this.setState({ user: null });
                 }, error => {
                   console.log(error);
                 });
-              }}
-              style={{ visibility: this.props.popup }}>Sign out</div>
+              }}>Sign out</div>
+              </div>
           </div>
           :
           <div className="google-login" onClick={ () => {

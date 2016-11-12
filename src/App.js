@@ -35,7 +35,7 @@ class App extends Component {
   render() {
     return (
       <div onClick={e => {
-        if (!e.target.classList.contains('logout-popup') && !e.target.classList.contains('avatar')) {
+        if (!e.target.classList.contains('popup-name') && !e.target.classList.contains('avatar')) {
           this.setState({ popup: 'hidden' });
         }
       }}>
