@@ -13,19 +13,25 @@ html, body {
 .header {
   height: 80px;
   line-height: 80px;
-  padding-left: 50px;
+  padding-left: 30px;
 }
 
 [name="search"] {
   font-size: 20px;
   vertical-align: middle;
+  border: none;
+  padding: 5px;
+  outline-color: #ddd;
 }
 
 .search-btn {
   background: url('../images/search.png');
-  background-position: center;
-  width: 80px;
-  height: 80px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 20px;
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
   border: none;
   outline: none;
   float: left;
@@ -33,7 +39,7 @@ html, body {
 }
 
 .search-btn:hover {
-  background-position: 5px 5px;
+  background-position: 2px 3px;
 }
 
 .google-login,
@@ -66,7 +72,7 @@ html, body {
   background: #333;
   height: 15px;
   line-height: 15px;
-  padding: 5px;
+  padding: 8px;
   z-index: 999999999999999999;
   border-radius: 10px;
   border: 1px solid #333;
@@ -105,11 +111,15 @@ html, body {
 }
 
 .filter {
+  height: 40px;
   font-size: 20px;
-  vertical-align: middle;
   cursor: pointer;
   float: right;
-  margin-top: 26px;
+  margin-top: 20px;
   margin-right: 50px;
+  background: transparent;
+  border: none;
+  outline-color: #ddd;
 }
+
 
