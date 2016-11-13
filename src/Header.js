@@ -18,10 +18,6 @@ class Header extends Component {
   }
 
   render() {
-    // firebase.auth().onAuthStateChanged(user => {
-    //   this.setState({ user });
-    // });
-
     return <div className="header">
       <button className="search-btn"></button>
       <input type="text" name="search" placeholder="Search.." />
@@ -56,11 +52,19 @@ class Header extends Component {
           }}></div>
       }
 
+      {
+        this.state.user ?
+          <div className="add-store" onClick={() => {
+            this.props.onAddStore();
+          }}>Add store</div>
+          :
+          ''
+      }
+
       <select className="filter">
         <option value="all" default>Show all</option>
         <option value="asian">Asian</option>
       </select>
-
     </div>
   }
 }

@@ -1,24 +1,34 @@
+* {
+  box-sizing: border-box;
+  font-size: 20px;
+  font-weight: 300;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   min-width: 700px;
 }
 
 .gmap {
   height: 100%;
   position: static !important;
+  /*margin-top: -80px;*/
 }
 
 .header {
+  z-index: 999999999999999999;
+  position: fixed;
+  background: #fff;
+  width: 100%;
   height: 80px;
   line-height: 80px;
   padding-left: 30px;
 }
 
 [name="search"] {
-  font-size: 20px;
   vertical-align: middle;
   border: none;
   padding: 5px;
@@ -68,7 +78,6 @@ html, body {
 .popup {
   position: absolute;
   color: #eee;
-  font-size: 14px;
   top: 72px;
   background: #333;
   line-height: 15px;
@@ -82,6 +91,7 @@ html, body {
   height: 15px;
   right: 10px;
   content: 'Login with Google';
+  font-size: 14px;
 }
 
 .popup {
@@ -102,6 +112,7 @@ html, body {
   width: 70%;
   margin: auto;
   margin-top: 10px;
+  font-size: 14px;
 }
 
 .google-login:hover:after {
@@ -125,16 +136,68 @@ html, body {
   top: -9px;
 }
 
+.filter,
+.add-store {
+  float: right;
+  cursor: pointer;
+  margin-right: 50px;
+
+}
+
 .filter {
   height: 40px;
-  font-size: 20px;
-  cursor: pointer;
-  float: right;
   margin-top: 20px;
-  margin-right: 50px;
   background: transparent;
   border: none;
   outline-color: #ddd;
+}
+
+.add-store-window {
+  position: absolute;
+  top: 90px;
+  width: 500px;
+  z-index: 999999999999999999;
+  background: white;
+  margin-left: 50%;
+  margin-top: 10px;
+  left: -250px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.add-store-window__title {
+  text-align: center;
+}
+
+.left-col,
+.right-col {
+  margin-top: 10px;
+  width: 50%;
+  text-align: center;
+}
+
+.left-col {
+  float: left;
+}
+
+.right-col {
+  float: right;
+}
+
+.input-label {
+  margin-top: 10px;
+}
+
+.store-type {
+  float: left;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  background: #dfdfdf;
+  padding: 2px 5px 2px 0px;
+}
+
+.store-type input[type=checkbox] {
 }
 
 

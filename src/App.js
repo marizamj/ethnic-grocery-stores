@@ -13,23 +13,26 @@ firebase.initializeApp(config);
 
 import Header from './Header';
 import GMap from './GMap';
+import AddStore from './AddStore';
+// import StoreInfo from './StoreInfo';
 
-// const toArray = (obj) =>
-//   Object.keys(obj || {}).map(id => ({ id, ...obj[id] }));
+const toArray = (obj) =>
+  Object.keys(obj || {}).map(id => ({ id, name: obj[id] }));
 
 class App extends Component {
   state = {
-    stores: [],
+    storeTypes: [],
     user: null,
-    token: null
+    token: null,
+    'add-store': false
   };
 
   componentDidMount() {
-    // firebase.database().ref('stores').on('value', (snapshot) => {
-    //   this.setState({
-    //     stores: toArray(snapshot.val())
-    //   });
-    // });
+    firebase.database().ref('storeTypes').on('value', snapshot => {
+      this.setState({
+        storeTypes: toArray(snapshot.val())
+      });
+    });
   }
 
   render() {
@@ -58,10 +61,18 @@ class App extends Component {
           console.log(user);
         }} onAvaClick={ () => {
           this.setState({ popup: 'visible' });
+        }} onAddStore={ () => {
+          this.setState({ 'add-store': true });
         }}
         popup={this.state.popup}
         user={this.state.user} token={this.state.token} />
         <GMap />
+        {
+          this.state['add-store'] ?
+            <AddStore storeTypes={this.state.storeTypes} />
+            :
+            ''
+        }
       </div>
     );
   }
