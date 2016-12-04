@@ -14,9 +14,9 @@ firebase.initializeApp(config);
 import Header from './Header';
 import GMap from './GMap';
 import AddStore from './AddStore';
-// import StoreInfo from './StoreInfo';
+import Sidebar from './Sidebar';
 
-const toArray = (obj) =>
+const toArrayTypes = obj =>
   Object.keys(obj || {}).map(id => ({ id, name: obj[id] }));
 
 class App extends Component {
@@ -24,13 +24,14 @@ class App extends Component {
     storeTypes: [],
     user: null,
     token: null,
+    filter: 'Show all',
     'add-store': false
   };
 
   componentDidMount() {
     firebase.database().ref('storeTypes').on('value', snapshot => {
       this.setState({
-        storeTypes: toArray(snapshot.val())
+        storeTypes: toArrayTypes(snapshot.val())
       });
     });
   }
@@ -56,6 +57,7 @@ class App extends Component {
           )
         }
         </ul> */}
+
         <Header onLogin={ (user, token) => {
           this.setState({ user, token });
           console.log(user);
@@ -63,13 +65,34 @@ class App extends Component {
           this.setState({ popup: 'visible' });
         }} onAddStore={ () => {
           this.setState({ 'add-store': true });
+        }} onFilterChange={ e => {
+          this.setState({ filter: e.target.value });
         }}
         popup={this.state.popup}
-        user={this.state.user} token={this.state.token} />
-        <GMap />
+        user={this.state.user} token={this.state.token}
+        storeTypes={this.state.storeTypes}>
+          <div>3</div>
+        </Header>
+        <Sidebar currentStore={this.state.currentStore} />
+        <GMap filter={this.state.filter}
+          onOpenStore={ store => {
+            this.setState({ currentStore: store });
+            console.log(store);
+          }}
+        />
         {
           this.state['add-store'] ?
-            <AddStore storeTypes={this.state.storeTypes} />
+          <div className="map-screen"></div>
+          :
+          ''
+        }
+        {
+          this.state['add-store'] ?
+            <AddStore onSubmit={form => {
+              console.log(form);
+            }} onClose={() => {
+              this.setState({ 'add-store': false });
+            }} storeTypes={this.state.storeTypes} />
             :
             ''
         }

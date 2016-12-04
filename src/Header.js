@@ -61,9 +61,17 @@ class Header extends Component {
           ''
       }
 
-      <select className="filter">
-        <option value="all" default>Show all</option>
-        <option value="asian">Asian</option>
+      <select className="filter" onChange={ e => {
+        this.props.onFilterChange(e);
+      }}>
+        <option value="Show all" default>Show all</option>
+        {
+          this.props.storeTypes ?
+            this.props.storeTypes.map(store =>
+              <option value={store.name} key={store.id}>{store.name}</option>)
+            :
+            ''
+        }
       </select>
     </div>
   }
