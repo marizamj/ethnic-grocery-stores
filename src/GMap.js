@@ -62,7 +62,7 @@ class GMap extends Component {
       google = window.google;
 
       map = new google.maps.Map(this.refs.node, {
-        center: { lat: 52.368717, lng: 4.867490 },
+        center: { lat: 52.368717, lng: 4.947490 },
         zoom: 12
       });
 

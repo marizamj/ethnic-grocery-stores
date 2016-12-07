@@ -10,11 +10,13 @@ html, body {
   height: 100%;
   font-family: 'Roboto', sans-serif;
   min-width: 700px;
+  overflow: hidden;
 }
 
 .gmap {
   height: 100%;
   position: static !important;
+  padding-left: 250px;
 }
 
 .map-screen {
@@ -26,6 +28,7 @@ html, body {
   z-index: 999999999;
 }
 
+.admin,
 .header,
 .sidebar {
   position: fixed;
@@ -41,14 +44,50 @@ html, body {
   box-shadow: 0px 2px 5px 0px #bbb;
 }
 
+.admin,
 .sidebar {
-  z-index: 999999999;
+  z-index: 99999999;
   width: 250px;
+  margin-top: 80px;
+  padding-bottom: 20px;
   height: 100%;
-  box-shadow: 1px 0px 5px 0px #bbb;
-  padding-top: 80px;
+  overflow: auto;
 }
 
+.sidebar {
+  box-shadow: 1px 0px 5px 0px #bbb;
+}
+
+.admin {
+  right: 0;
+  box-shadow: -1px 0px 5px 0px #bbb;
+  margin-right: -230px;
+  transition: 0.5s margin-right ease-out;
+}
+
+.admin-opened {
+  margin-right: 0;
+  transition: 0.5s margin-right ease-out;
+}
+
+.arrow {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  background-image: url(../images/arrow-left.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: 0.7s transform ease-out;
+}
+
+.arrow-opened {
+  transform: rotateY(180deg);
+  transition: 0.7s transform ease-out;
+}
+
+.admin-title,
 .sidebar-store__name {
   text-align: center;
   height: 80px;
@@ -57,6 +96,12 @@ html, body {
   border-bottom: 1px solid #ccc;
 }
 
+.admin-title {
+  padding-left: 10px;
+  border-bottom: none;
+}
+
+.admin-store-title,
 .sidebar-store__adress,
 .sidebar-store__description,
 .sidebar-store__contacts,
@@ -68,16 +113,59 @@ html, body {
   padding-left: 10px;
   font-size: 18px;
   padding: 5px;
-  /*margin-bottom: 10px;*/
-  /*border-bottom: 1px solid #ccc;*/
 }
 
+.admin-store-title {
+  cursor: pointer;
+  border-top: 1px solid #ccc;
+}
+
+.admin-store-title,
 .sidebar-store__type {
   font-size: 16px;
   text-align: center;
   border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
   background: #f7f7f7;
+}
+
+.admin-store-info {
+  margin-top: 5px;
+  padding: 0 20px;
+  text-align: left;
+  font-size: 16px;
+  position: relative;
+  overflow: visible;
+  margin-bottom: 50px;
+}
+
+.admin-store-info__text {
+  color: #61a6c6;
+  font-size: 14px;
+}
+
+.admin-store-info__field {
+  cursor: pointer;
+}
+
+.admin-store-submit,
+.admin-store-delete {
+  display: inline-block;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 16px;
+  position: absolute;
+}
+
+.admin-store-submit {
+  left: 55px;
+}
+
+.admin-store-delete {
+  right: 55px;
+}
+
+.sidebar-store__type {
+  margin-bottom: 5px;
 }
 
 .sidebar-store__desc {
@@ -90,6 +178,7 @@ html, body {
 .sidebar-store__text {
   display: block;
   padding-left: 30px;
+  padding-right: 10px;
 }
 
 .sidebar-store__text a {
@@ -240,6 +329,7 @@ html, body {
   left: -250px;
   border-radius: 10px;
   padding: 15px;
+  box-shadow: 1px 0px 5px 0px #bbb;
 }
 
 .add-store-window__title {
@@ -261,14 +351,6 @@ html, body {
   margin-top: 10px;
   width: 50%;
   text-align: center;
-}
-
-.left-col {
-  float: left;
-}
-
-.right-col {
-  float: right;
 }
 
 .req {
@@ -294,27 +376,35 @@ input[type="text"] {
   padding: 5px;
 }
 
-.add-store-window__submit {
-  clear: both;
+.btn {
+  border: 1px solid #999;
+  border-radius: 10px;
   text-align: center;
+  cursor: pointer;
+
+}
+
+.btn:hover {
+  color: #fff;
+  border: 1px solid white;
+  background: #f37e7f;
+
+}
+
+.add-store-window__submit {
+  margin-left: 190px;
+  clear: both;
   padding: 10px;
   width: 90px;
-  margin-left: 190px;
-  border-radius: 10px;
-  border: 1px solid #999;
   display: block;
   margin-bottom: 10px;
   position: relative;
   top: 10px;
-  cursor: pointer;
 }
 
 .add-store-window__submit:hover {
   top: 11px;
   left: 1px;
-  background: #f37e7f;
-  color: #fff;
-  border: 1px solid white;
 }
 
 .add-store-window__close {
@@ -324,5 +414,15 @@ input[type="text"] {
   cursor: pointer;
 }
 
+.hidden {
+  display: none;
+}
 
+.float-l {
+  float: left;
+}
+
+.float-r {
+  float: right;
+}
 

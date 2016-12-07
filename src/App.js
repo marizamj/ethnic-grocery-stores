@@ -15,9 +15,12 @@ import Header from './Header';
 import GMap from './GMap';
 import AddStore from './AddStore';
 import Sidebar from './Sidebar';
+import Admin from './Admin';
 
 const toArrayTypes = obj =>
-  Object.keys(obj || {}).map(id => ({ id, name: obj[id] }));
+  Object.keys(obj || {})
+  .map(id => ({ id, name: obj[id] }))
+  .sort((a, b) => a.name > b.name);
 
 class App extends Component {
   state = {
@@ -33,6 +36,14 @@ class App extends Component {
       this.setState({
         storeTypes: toArrayTypes(snapshot.val())
       });
+    });
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user });
+      } else {
+        this.setState({ user: { email: '' } });
+      }
     });
   }
 
@@ -77,25 +88,27 @@ class App extends Component {
         <GMap filter={this.state.filter}
           onOpenStore={ store => {
             this.setState({ currentStore: store });
-            console.log(store);
           }}
         />
         {
           this.state['add-store'] ?
           <div className="map-screen"></div>
-          :
-          ''
+          : ''
         }
         {
           this.state['add-store'] ?
             <AddStore onSubmit={form => {
-              console.log(form);
+              firebase.database().ref('newStores').push({
+                ...form,
+                senderName: this.state.user.displayName,
+                senderEmail: this.state.user.email
+              });
             }} onClose={() => {
               this.setState({ 'add-store': false });
             }} storeTypes={this.state.storeTypes} />
-            :
-            ''
+            : ''
         }
+        <Admin />
       </div>
     );
   }

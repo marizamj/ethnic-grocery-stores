@@ -2,22 +2,12 @@ import React, { Component } from 'react';
 
 class Sidebar extends Component {
   render() {
-    // const {
-    //   name,
-    //   type,
-    //   adress,
-    //   description,
-    //   website,
-    //   email,
-    //   telephone,
-    //   hours } = this.props.currentStore;
-
     return <div className="sidebar">
       {
         this.props.currentStore ?
           <div className="sidebar-store">
             <div className="sidebar-store__name">
-              {this.props.currentStore.name}<br />
+              {this.props.currentStore.title}<br />
             </div>
             <div className="sidebar-store__type">{this.props.currentStore.type}</div>
             <div className="sidebar-store__adress">
