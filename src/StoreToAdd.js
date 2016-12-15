@@ -51,7 +51,14 @@ class StoreToAdd extends Component {
           )
         }
 
-        <div className="btn admin-store-submit">Submit</div>
+        <div className="btn admin-store-submit"
+          onClick={ e => {
+            const form = {
+
+            };
+
+            this.props.onSubmit(form);
+          }} >Submit</div>
         <div className="btn admin-store-delete"
           onClick={ e => this.props.onDelete(this.props.store) }>Delete</div>
 

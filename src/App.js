@@ -25,11 +25,11 @@ const toArrayTypes = obj =>
 
 class App extends Component {
   state = {
+    'add-store': false,
     storeTypes: [],
     user: null,
     token: null,
     filter: 'Show all',
-    'add-store': false,
     message: {
       show: false,
       text: ''
