@@ -16,6 +16,7 @@ import GMap from './GMap';
 import AddStore from './AddStore';
 import Sidebar from './Sidebar';
 import Admin from './Admin';
+import Message from './Message';
 
 const toArrayTypes = obj =>
   Object.keys(obj || {})
@@ -28,7 +29,11 @@ class App extends Component {
     user: null,
     token: null,
     filter: 'Show all',
-    'add-store': false
+    'add-store': false,
+    message: {
+      show: false,
+      text: ''
+    }
   };
 
   componentDidMount() {
@@ -90,11 +95,15 @@ class App extends Component {
             this.setState({ currentStore: store });
           }}
         />
+
         {
           this.state['add-store'] ?
-          <div className="map-screen"></div>
-          : ''
+            <div className="map-screen"></div>
+            : ''
         }
+
+        <Message ref="msg" msg={this.state.message} />
+
         {
           this.state['add-store'] ?
             <AddStore onSubmit={form => {
@@ -103,11 +112,21 @@ class App extends Component {
                 senderName: this.state.user.displayName,
                 senderEmail: this.state.user.email
               });
-            }} onClose={() => {
+            }} onClose={msg => {
               this.setState({ 'add-store': false });
+
+              if (msg) {
+                this.setState({ message: { show: true, text: msg } });
+
+                setTimeout(() => {
+                  this.setState({ message: { show: false, text: msg } });
+                }, 2000);
+              }
+
             }} storeTypes={this.state.storeTypes} />
             : ''
         }
+
         <Admin />
       </div>
     );

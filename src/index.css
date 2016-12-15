@@ -13,6 +13,22 @@ html, body {
   overflow: hidden;
 }
 
+.message {
+  position: absolute;
+  text-align: center;
+  width: 500px;
+  background: white;
+  top: 25%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 99999999999;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 1px 0px 5px 0px #bbb;
+
+}
+
 .gmap {
   height: 100%;
   position: static !important;
@@ -38,6 +54,7 @@ html, body {
 .header {
   z-index: 999999999999999999;
   width: 100%;
+  min-width: 700px;
   height: 80px;
   line-height: 80px;
   padding-left: 30px;
@@ -49,13 +66,13 @@ html, body {
   z-index: 99999999;
   width: 250px;
   margin-top: 80px;
-  padding-bottom: 20px;
   height: 100%;
   overflow: auto;
 }
 
 .sidebar {
   box-shadow: 1px 0px 5px 0px #bbb;
+  padding-bottom: 20px;
 }
 
 .admin {
@@ -63,6 +80,7 @@ html, body {
   box-shadow: -1px 0px 5px 0px #bbb;
   margin-right: -230px;
   transition: 0.5s margin-right ease-out;
+  padding-bottom: 80px;
 }
 
 .admin-opened {
@@ -147,6 +165,12 @@ html, body {
   cursor: pointer;
 }
 
+.admin-store-info__textarea {
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  height: 33px;
+}
+
 .admin-store-submit,
 .admin-store-delete {
   display: inline-block;
@@ -194,29 +218,36 @@ html, body {
   font-size: 16px;
 }
 
+.search {
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  float: left;
+  cursor: pointer;
+  position: relative;
+}
+
+.search-pic {
+  background: url('../images/search.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  /*opacity: 0.5;*/
+}
+
 [name="search"] {
-  vertical-align: middle;
+  position: absolute;
+  left: 60px;
+  top: 3px;
   border: none;
   padding: 5px;
   outline-color: #ddd;
 }
 
-.search-btn {
-  background: url('../images/search.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-top: 20px;
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
-  border: none;
-  outline: none;
-  float: left;
-  cursor: pointer;
-}
-
-.search-btn:hover {
-  background-position: 2px 3px;
+.search-pic:hover {
+  opacity: 0.5;
+  /*background-position: 2px 3px;*/
 }
 
 .google-login,
@@ -416,6 +447,11 @@ input[type="text"] {
 
 .hidden {
   display: none;
+}
+
+.transition-opacity {
+  opacity: 0;
+  transition: 1s opacity ease-out;
 }
 
 .float-l {

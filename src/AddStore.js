@@ -86,6 +86,7 @@ class AddStore extends Component {
             }
 
             this.props.onSubmit(form);
+            this.props.onClose('Thank you!');
 
           } else {
             console.log('not filled');

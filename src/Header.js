@@ -19,8 +19,14 @@ class Header extends Component {
 
   render() {
     return <div className="header">
-      <button className="search-btn"></button>
-      <input type="text" name="search" placeholder="Search.." />
+      <div className="search">
+        <div className="search-pic"
+          onClick={e => {
+
+          }}>
+        </div>
+        <input type="text" name="search" placeholder="Search.." />
+      </div>
 
       {
         this.state.user ?

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 const firebase = require('firebase');
 
+import StoreToAdd from './StoreToAdd';
+
 const newStoresToArray = obj =>
   Object.keys(obj || {}).map(id => ({ id, store: obj[id] }));
 
@@ -42,24 +44,16 @@ class Admin extends Component {
 
         {
           this.state.newStores ?
-
             this.state.newStores.map(store =>
-              <div key={store.id}>
-                <div className="admin-store-title"
-                  onClick={ e => e.target.parentNode.children[1].classList.toggle('hidden') }
-                >
-                  { store.store.title }
-                </div>
-                <div className="admin-store-info hidden">
-                  <span className="admin-store-info__text">Adress:</span>
-                  <div className="admin-store-info__field"
-                    onClick={ e => console.log('ololo') }>{store.store.adress}</div>
-                  <div className="btn admin-store-submit">Submit</div>
-                  <div className="btn admin-store-delete">Delete</div>
-                </div>
-
-              </div>
-            )
+              <StoreToAdd key={store.id}
+                store={store}
+                onDelete={store => {
+                  firebase.database().ref(`newStores/${store.id}`)
+                  .remove()
+                  .then(() => console.log('removed'))
+                  .catch(() => console.log('failed'));
+                }}
+                /> )
             : ''
         }
 
