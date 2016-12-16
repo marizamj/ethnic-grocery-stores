@@ -46,6 +46,15 @@ class Admin extends Component {
             : ''
         }
 
+        <div className="admin-add-type">
+          <input type="text" ref="add-type" placeholder="Add new type" />
+          <div className="btn admin-add-type__btn"
+            onClick={ e => {
+              this.props.onPushTypeToFB(this.refs['add-type'].value);
+              this.refs['add-type'].value = '';
+            }}>Add</div>
+        </div>
+
       </div>
       :
       <div></div>

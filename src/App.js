@@ -136,7 +136,14 @@ class App extends Component {
             : ''
         }
 
-        <Admin user={this.state.user} />
+        <Admin user={this.state.user}
+          onPushTypeToFB={ value => {
+            if (value) {
+              firebase.database().ref('storeTypes').push(value);
+            } else {
+              console.log('no value to push');
+            }
+          }} />
       </div>
     );
   }
