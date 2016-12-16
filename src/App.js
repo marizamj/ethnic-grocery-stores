@@ -27,7 +27,7 @@ class App extends Component {
   state = {
     'add-store': false,
     storeTypes: [],
-    user: null,
+    user: { email: '' },
     token: null,
     filter: 'Show all',
     message: {
@@ -77,6 +77,12 @@ class App extends Component {
         <Header onLogin={ (user, token) => {
           this.setState({ user, token });
           console.log(user);
+        }} onLogout={ () => {
+          firebase.auth().signOut().then(() => {
+            this.setState({ user: { email: '' } });
+          }, error => {
+            console.log(error);
+          });
         }} onAvaClick={ () => {
           this.setState({ popup: 'visible' });
         }} onAddStore={ () => {
@@ -90,6 +96,7 @@ class App extends Component {
           <div>3</div>
         </Header>
         <Sidebar currentStore={this.state.currentStore} />
+
         <GMap filter={this.state.filter}
           onOpenStore={ store => {
             this.setState({ currentStore: store });
@@ -127,7 +134,7 @@ class App extends Component {
             : ''
         }
 
-        <Admin />
+        <Admin user={this.state.user} />
       </div>
     );
   }

@@ -9,18 +9,10 @@ const newStoresToArray = obj =>
 
 class Admin extends Component {
   state = {
-    user: { email: '' }
+    newStores: []
   };
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({ user });
-      } else {
-        this.setState({ user: { email: '' } });
-      }
-    });
-
     firebase.database().ref('newStores').on('value', snapshot => {
       this.setState({
         newStores: newStoresToArray(snapshot.val())
@@ -28,12 +20,8 @@ class Admin extends Component {
     });
   }
 
-  componentDidUpdate() {
-    // console.log(this.state.newStores);
-  }
-
   render() {
-    return this.state.user.email === 'marizamj@gmail.com' ?
+    return this.props.user.email === 'marizamj@gmail.com' ?
       <div className="admin">
         <div className="arrow" onClick={ e => {
           e.target.classList.toggle('arrow-opened');

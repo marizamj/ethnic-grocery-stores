@@ -5,18 +5,6 @@ const firebase = require('firebase');
 window.firebase = firebase;
 
 class Header extends Component {
-  state = {
-    user: this.props.user
-  };
-
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({ user });
-      }
-    });
-  }
-
   render() {
     return <div className="header">
       <div className="search">
@@ -29,19 +17,15 @@ class Header extends Component {
       </div>
 
       {
-        this.state.user ?
+        this.props.user.email ?
           <div className="avatar"
-            style={{ backgroundImage: `url(${this.state.user.photoURL || ''})` }}
+            style={{ backgroundImage: `url(${this.props.user.photoURL || ''})` }}
             onClick={this.props.onAvaClick}>
             <div className="popup"
               style={{ visibility: this.props.popup }}>
-              <div className="popup-name">{ this.state.user.displayName }</div>
+              <div className="popup-name">{ this.props.user.displayName }</div>
               <div className="popup-sign-out" onClick={ () => {
-                firebase.auth().signOut().then(() => {
-                  this.setState({ user: null });
-                }, error => {
-                  console.log(error);
-                });
+                this.props.onLogout();
               }}>Sign out</div>
               </div>
           </div>
@@ -59,7 +43,7 @@ class Header extends Component {
       }
 
       {
-        this.state.user ?
+        this.props.user.email ?
           <div className="add-store" onClick={() => {
             this.props.onAddStore();
           }}>Add store</div>

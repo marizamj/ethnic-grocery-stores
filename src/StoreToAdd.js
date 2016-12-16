@@ -9,15 +9,20 @@ class StoreToAdd extends Component {
   };
 
   componentDidMount() {
+    const { store } = this.state;
+
     this.setState({
       fields: [
-        { edit: false, title: 'Type:', content: this.state.store.type.map(type => type.name).join(', ') },
-        { edit: false, title: 'Other type:', content: this.state.store['other-store-type'] },
-        { edit: false, title: 'Adress:', content: this.state.store.adress },
-        { edit: false, title: 'Description:', content: this.state.store.description },
-        { edit: false, title: 'Email:', content: this.state.store.email },
-        { edit: false, title: 'Website:', content: this.state.store.website },
-        { edit: false, title: 'Telephone:', content: this.state.store.telephone }
+        { edit: false, title: 'Type:', content: store.type.map(type => type.name).join(', ') },
+        { edit: false, title: 'Other type:', content: store['other-store-type'] },
+        { edit: false, title: 'Adress:', content: store.adress },
+        { edit: false, title: 'Description:', content: store.description },
+        { edit: false, title: 'Email:', content: store.email },
+        { edit: false, title: 'Website:', content: store.website },
+        { edit: false, title: 'Telephone:', content: store.telephone },
+        { edit: false, title: 'Hours:', content: '' },
+        { edit: false, title: 'Lat:', content: '' },
+        { edit: false, title: 'Long:', content: '' }
       ]
     });
   }
@@ -25,7 +30,10 @@ class StoreToAdd extends Component {
   render() {
     return <div>
       <div className="admin-store-title"
-        onClick={ e => e.target.parentNode.children[1].classList.toggle('hidden') }>
+        onClick={ e => {
+          e.target.parentNode.children[1].classList.toggle('hidden');
+          e.target.classList.toggle('admin-store-title__open');
+        }}>
         { this.state.store.title }
       </div>
 
