@@ -24,7 +24,7 @@ const toArrayStores = obj =>
 const toArrayTypes = obj =>
   Object.keys(obj || {})
   .map(id => ({ id, name: obj[id] }))
-  .sort((a, b) => a.name > b.name);
+  .sort((a, b) => +(a.name > b.name) || +(a.name === b.name) - 1);
 
 class App extends Component {
   state = {
@@ -69,11 +69,6 @@ class App extends Component {
           this.setState({ popup: 'hidden' });
         }
       }}>
-        {/*
-          firebase.database().ref('stores').push({
-            title: Math.random()
-          });
-        */}
 
         <Header onLogin={ (user, token) => {
           this.setState({ user, token });
