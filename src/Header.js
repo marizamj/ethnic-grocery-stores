@@ -5,15 +5,52 @@ const firebase = require('firebase');
 window.firebase = firebase;
 
 class Header extends Component {
+  state ={
+    searchValue: '',
+    matches: []
+  };
+
+  componentWillUpdate(_, nextState) {
+    if (nextState.searchValue !== this.state.searchValue) {
+      let matches;
+
+      if (!nextState.searchValue) {
+        matches = [];
+
+      } else {
+        const regExp = new RegExp(nextState.searchValue, 'gi');
+
+        matches = this.props.stores.filter(store =>
+          store.title.match(regExp) || store.adress.match(regExp));
+      }
+
+      this.setState({ matches });
+    }
+  }
+
   render() {
     return <div className="header">
       <div className="search">
-        <div className="search-pic"
-          onClick={e => {
+        <div className="search-pic"></div>
+        <input type="text"
+          name="search"
+          placeholder="Search.."
+          onChange={ e => this.setState({ searchValue: e.target.value }) } />
 
-          }}>
-        </div>
-        <input type="text" name="search" placeholder="Search.." />
+          {
+            this.state.matches.length > 0 ?
+              <div className="search-matches">
+                {
+                  this.state.matches.map(store =>
+                    <div key={store.title}
+                      className="search-matches__item">
+                      <span className="blue-color">{ store.title }</span>, { store.adress }
+                      </div>)
+                }
+              </div>
+              : ''
+          }
+
       </div>
 
       {

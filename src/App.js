@@ -18,6 +18,9 @@ import Sidebar from './Sidebar';
 import Admin from './Admin';
 import Message from './Message';
 
+const toArrayStores = obj =>
+  Object.keys(obj || {}).map(id => ({ id, ...obj[id] }));
+
 const toArrayTypes = obj =>
   Object.keys(obj || {})
   .map(id => ({ id, name: obj[id] }))
@@ -26,6 +29,7 @@ const toArrayTypes = obj =>
 class App extends Component {
   state = {
     'add-store': false,
+    stores: [],
     storeTypes: [],
     user: { email: '' },
     token: null,
@@ -50,6 +54,12 @@ class App extends Component {
         this.setState({ user: { email: '' } });
       }
     });
+
+    firebase.database().ref('stores').on('value', snapshot => {
+      this.setState({
+        stores: toArrayStores(snapshot.val())
+      });
+    });
   }
 
   render() {
@@ -59,20 +69,11 @@ class App extends Component {
           this.setState({ popup: 'hidden' });
         }
       }}>
-        {/* <button onClick={ () => {
+        {/*
           firebase.database().ref('stores').push({
             title: Math.random()
           });
-        }}>
-          Go
-        </button>
-        <ul>
-        {
-          this.state.stores.map(store =>
-            <li key={ store.id }>{ store.title }</li>
-          )
-        }
-        </ul> */}
+        */}
 
         <Header onLogin={ (user, token) => {
           this.setState({ user, token });
@@ -92,6 +93,7 @@ class App extends Component {
         }}
         popup={this.state.popup}
         user={this.state.user} token={this.state.token}
+        stores={this.state.stores}
         storeTypes={this.state.storeTypes}>
           <div>3</div>
         </Header>

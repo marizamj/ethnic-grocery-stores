@@ -13,7 +13,7 @@ class StoreToAdd extends Component {
 
     this.setState({
       fields: [
-        { edit: false, title: 'Type:', content: store.type.map(type => type.name).join(', ') },
+        { edit: false, title: 'Type:', content: store.type ? store.type.map(type => type.name).join(', ') : '' },
         { edit: false, title: 'Other type:', content: store['other-store-type'] },
         { edit: false, title: 'Adress:', content: store.adress },
         { edit: false, title: 'Description:', content: store.description },
