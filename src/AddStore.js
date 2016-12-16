@@ -7,8 +7,53 @@ class AddStore extends Component {
         ...store,
         checked: false
       }
-    })
+    }),
+
+    fields: {
+      required: [
+        { title: 'Adress', caption: '', placeholder: '' },
+        { title: 'Title', caption: '', placeholder: '' },
+        { title: 'Type', caption: '', placeholder: '' },
+        {
+          title: 'other-store-type',
+          caption: '(comma-separated list)',
+          placeholder: 'Other..',
+        }
+      ],
+
+      optional: [
+        { title: 'Description', caption: '' },
+        { title: 'Telephone', caption: '' },
+        { title: 'Email', caption: '' },
+        { title: 'Website', caption: '' },
+        { title: 'Keywords', caption: '(ex. "curry, gyoza, Kewpie mayonnaise..." etc.)' }
+      ]
+    }
   };
+
+  getTypesContent() {
+    return this.state.storeTypes.map(store =>
+      <div
+        style={ store.checked ? { background: '#f37e7f', color: '#fff' } : {}}
+        className="store-type"
+        key={store.id}>
+        <input
+          type="checkbox"
+          checked={store.checked}
+          name="store-type"
+          value={store.name}
+          onChange={e => {
+            this.setState({ storeTypes: this.state.storeTypes.map(store => {
+              if (store.name === e.target.value) {
+                return { ...store, checked: !store.checked };
+              } else {
+                return store;
+              }
+            }) })
+          }} /> {store.name}
+      </div>
+    )
+  }
 
   render() {
     return <div className="add-store-window">
@@ -19,49 +64,56 @@ class AddStore extends Component {
       <div className="add-store-window__text">(<span className="req">*</span> - required fields)</div>
       <form className="add-store-window__form">
         <div className="float-l left-col">
-          <div className="input-label">Adress<span className="req">*</span></div>
-          <input type="text" name="adress" ref="adress" />
-          <div className="input-label">Title<span className="req">*</span></div>
-          <input type="text" name="title" ref="title" />
-          <div className="input-label">Type<span className="req">*</span></div>
           {
-            this.state.storeTypes.map(store =>
-              <div
-                style={ store.checked ? { background: '#f37e7f', color: '#fff' } : {}}
-                className="store-type"
-                key={store.id}>
-                <input
-                  type="checkbox"
-                  checked={store.checked}
-                  name="store-type"
-                  value={store.name}
-                  onChange={e => {
-                    this.setState({ storeTypes: this.state.storeTypes.map(store => {
-                      if (store.name === e.target.value) {
-                        return { ...store, checked: !store.checked };
-                      } else {
-                        return store;
-                      }
-                    }) })
-                  }} /> {store.name}
+            this.state.fields.required.map(field =>
+              <div key={field.title}>
+                {
+                  field.title !== 'other-store-type' ?
+                    <div className="input-label">
+                      {field.title}<span className="req">*</span>
+                    </div>
+                    : ''
+                }
+                {
+                  field.title === 'Type' ?
+                    this.getTypesContent()
+                    :
+                    <input type="text"
+                      name={field.title.toLowerCase()}
+                      ref={field.title.toLowerCase()}
+                      placeholder={field.placeholder}
+                    />
+                }
+
+                {
+                  field.caption ?
+                    <div className="add-store-window__text">{field.caption}</div>
+                    : ""
+                }
               </div>
             )
           }
-          <input type="text" name="other-store-type" ref="other-store-type" placeholder="Other.." />
-          <div className="add-store-window__text">(comma-separated list)</div>
         </div>
-        <div className="float-r left-col right-col">
-          <div className="input-label">Description</div>
-          <input type="text" name="description" ref="description" />
-          <div className="input-label">Telephone</div>
-          <input type="text" name="telephone" ref="telephone" />
-          <div className="input-label">Email</div>
-          <input type="text" name="email" ref="email" />
-          <div className="input-label">Website</div>
-          <input type="text" name="website" ref="website" />
-          <div className="input-label">Keywords</div>
-          <input type="text" name="keywords" ref="keywords" />
-          <div className="add-store-window__text">(ex. "curry, gyoza, Kewpie mayonnaise..." etc.)</div>
+
+        <div className="float-r right-col">
+          {
+            this.state.fields.optional.map(field =>
+              <div key={field.title}>
+                <div className="input-label">{field.title}</div>
+                <input type="text"
+                  name={field.title.toLowerCase()}
+                  ref={field.title.toLowerCase()}
+                />
+                {
+                  field.caption ?
+                    <div className="add-store-window__text">
+                      {field.caption}
+                    </div>
+                    : ''
+                }
+              </div>
+            )
+          }
         </div>
 
         <div className="btn add-store-window__submit" onClick={() => {
