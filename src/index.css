@@ -240,7 +240,7 @@ html, body {
 }
 
 .search {
-  margin-top: 20px;
+  margin-top: 10px;
   border: none;
   outline: none;
   float: left;
@@ -248,17 +248,17 @@ html, body {
 }
 
 .search-pic {
-  background: url('../images/search.png');
-  background-size: cover;
+  background: url('../images/logo-s.png');
+  background-size: contain;
   background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
+  width: 130px;
+  height: 60px;
 }
 
 [name="search"] {
   position: absolute;
-  left: 60px;
-  top: 3px;
+  left: 90px;
+  top: 13px;
   border: none;
   padding: 5px;
   outline-color: #ddd;
