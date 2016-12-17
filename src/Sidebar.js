@@ -4,7 +4,7 @@ const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 
 class Sidebar extends Component {
   state = {
-    fields: [ 'Adress', 'Description', 'Website', 'Email', 'Telephone' ]
+    fields: [ 'Adress', 'Description', 'Email', 'Telephone', 'Keywords' ]
   };
 
   render() {
@@ -31,13 +31,30 @@ class Sidebar extends Component {
             }
 
             {
+              currentStore.website ?
+                <div className="sidebar-store__field">
+                  <span className="sidebar-store__desc">Web:</span>
+                  <span className="sidebar-store__text">
+                    <a href={currentStore.website} target="_blank">
+                      {
+                        currentStore.website.length > 20 ?
+                          `${currentStore.website.slice(0, 20)}...`
+                          : currentStore.website
+                      }
+                    </a>
+                  </span>
+                </div>
+                : ''
+            }
+
+            {
               currentStore.hours ?
                 <div className="sidebar-store__hours">
                   <span className="sidebar-store__desc">Hours: </span>
                   {
-                    Object.keys(currentStore.hours).map( (day, i) =>
-                      <span key={ weekDays[i] } className="sidebar-store__text">
-                        { weekDays[i] }: { currentStore.hours[day] }
+                    weekDays.map(weekDay =>
+                      <span key={ weekDay } className="sidebar-store__text">
+                        { weekDay }: { currentStore.hours[weekDay.toLowerCase()] }
                       </span>
                     )
                   }

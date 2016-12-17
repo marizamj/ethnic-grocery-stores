@@ -13,18 +13,19 @@ class StoreToAdd extends Component {
 
     this.setState({
       fields: [
-        { edit: false, title: 'Type:', content: store.type ? store.type.map(type => type.name).join(', ') : '' },
-        { edit: false, title: 'Other type:', content: store['other-store-type'] },
-        { edit: false, title: 'Adress:', content: store.adress },
-        { edit: false, title: 'Description:', content: store.description },
-        { edit: false, title: 'Email:', content: store.email },
-        { edit: false, title: 'Website:', content: store.website },
-        { edit: false, title: 'Telephone:', content: store.telephone },
-        { edit: false, title: 'Hours:', content: '' },
-        { edit: false, title: 'Lat:', content: '' },
-        { edit: false, title: 'Long:', content: '' },
-        { edit: false, title: 'Sender name:', content: store.senderName },
-        { edit: false, title: 'Sender email:', content: store.senderEmail }
+        { edit: false, title: 'Type', value: store.type ? store.type.map(type => type.name).join(', ') : '' },
+        { edit: false, title: 'Other type', value: store['other-store-type'] },
+        { edit: false, title: 'Adress', value: store.adress },
+        { edit: false, title: 'Description', value: store.description },
+        { edit: false, title: 'Email', value: store.email },
+        { edit: false, title: 'Website', value: store.website },
+        { edit: false, title: 'Telephone', value: store.telephone },
+        { edit: false, title: 'Keywords', value: store.keywords },
+        { edit: false, title: 'Hours', value: 'mon: , tue: , wed: , thu: , fri: , sat: , sun:' },
+        { edit: false, title: 'Lat', value: '' },
+        { edit: false, title: 'Long', value: '' },
+        { edit: false, title: 'Sender name', value: store.senderName },
+        { edit: false, title: 'Sender email', value: store.senderEmail }
       ]
     });
   }
@@ -44,17 +45,18 @@ class StoreToAdd extends Component {
         {
           this.state.fields.map(field =>
             <div key={field.title}>
-              <span className="admin-store-info__text">{field.title}</span>
+              <span className="admin-store-info__text">{field.title}:</span>
               {
                 field.edit ?
                   <textarea
-                    defaultValue={field.content || 'no info'}
-                    className="admin-store-info__textarea"></textarea>
+                    defaultValue={field.value || 'no info'}
+                    className="admin-store-info__textarea"
+                    onChange={ e => field.value = e.target.value }></textarea>
                   :
                   <div className="admin-store-info__field"
                     onClick={e => {
                       field.edit = true;
-                    }}>{field.content || 'no info'}</div>
+                    }}>{field.value || 'no info'}</div>
               }
 
             </div>
@@ -63,11 +65,24 @@ class StoreToAdd extends Component {
 
         <div className="btn admin-store-submit"
           onClick={ e => {
-            const form = {
+            const form = this.state.fields.reduce((result, field) => {
+              result[field.title.toLowerCase()] = field.value;
+              return result;
+            }, {});
 
-            };
+            form.title = this.state.store.title;
+            form.hours = form.hours.split(', ').reduce( (result, day) => {
+              const parts = day.split(': ');
+              result[parts[0]] = parts[1];
+              return result;
+            }, {});
+            form.latLng = { lat: Number(form.lat), lng: Number(form.long) };
 
-            this.props.onSubmit(form);
+            delete form.lat;
+            delete form.long;
+            delete form['other type'];
+
+            this.props.onPushStoreToFB(form);
           }} >Submit</div>
         <div className="btn admin-store-delete"
           onClick={ e => this.props.onDelete(this.props.store) }>Delete</div>

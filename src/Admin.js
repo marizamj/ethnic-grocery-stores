@@ -35,7 +35,7 @@ class Admin extends Component {
             this.state.newStores.map(store =>
               <StoreToAdd key={store.id}
                 store={store}
-                onSubmit={form => console.log("coming soon") }
+                onPushStoreToFB={form => this.props.onPushStoreToFB(form) }
                 onDelete={store => {
                   firebase.database().ref(`newStores/${store.id}`)
                   .remove()
