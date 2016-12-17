@@ -1,84 +1,52 @@
 import React, { Component } from 'react';
 
+const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
+
 class Sidebar extends Component {
+  state = {
+    fields: [ 'Adress', 'Description', 'Website', 'Email', 'Telephone' ]
+  };
+
   render() {
+    const { currentStore } = this.props;
+
     return <div className="sidebar">
       {
-        this.props.currentStore ?
+        currentStore ?
           <div className="sidebar-store">
             <div className="sidebar-store__name">
-              {this.props.currentStore.title}<br />
+              {currentStore.title}<br />
             </div>
-            <div className="sidebar-store__type">{this.props.currentStore.type}</div>
-            <div className="sidebar-store__adress">
-              <span className="sidebar-store__desc">Adress: </span>
-              <span className="sidebar-store__text">{this.props.currentStore.adress}</span>
-            </div>
+            <div className="sidebar-store__type">{currentStore.type}</div>
 
             {
-              this.props.currentStore.description ?
-                <div className="sidebar-store__description">
-                  <span className="sidebar-store__desc">Description: </span>
-                  <span className="sidebar-store__text">{this.props.currentStore.description}</span>
-                </div>
-              : ''
-            }
-            <div className="sidebar-store__website">
-              <span className="sidebar-store__desc">Contacts: </span>
-            {
-              this.props.currentStore.website ?
-                <span className="sidebar-store__text"><a href="#">{this.props.currentStore.website}</a></span>
-              : ''
-            }
-            </div>
-
-            {
-              this.props.currentStore.email ?
-                <div className="sidebar-store__email">
-                  <span className="sidebar-store__text">{this.props.currentStore.email}</span>
-                </div>
-              : ''
+              this.state.fields.map(field =>
+                currentStore[field.toLowerCase()] ?
+                  <div key={field} className="sidebar-store__field">
+                    <span className="sidebar-store__desc">{field}:</span>
+                    <span className="sidebar-store__text">{currentStore[field.toLowerCase()]}</span>
+                  </div>
+                : ''
+              )
             }
 
             {
-              this.props.currentStore.telephone ?
-                <div className="sidebar-store__telephone">
-                  <span className="sidebar-store__text">{this.props.currentStore.telephone}</span>
-                </div>
-              : ''
-            }
-
-            {
-              this.props.currentStore.hours ?
+              currentStore.hours ?
                 <div className="sidebar-store__hours">
                   <span className="sidebar-store__desc">Hours: </span>
-                  <span className="sidebar-store__text">
-                    Mon: {this.props.currentStore.hours.mon}
-                  </span>
-                  <span className="sidebar-store__text">
-                    Tue: {this.props.currentStore.hours.tue}
-                  </span>
-                  <span className="sidebar-store__text">
-                    Wed: {this.props.currentStore.hours.wed}
-                  </span>
-                  <span className="sidebar-store__text">
-                    Thu: {this.props.currentStore.hours.thu}
-                  </span>
-                  <span className="sidebar-store__text">
-                    Fri: {this.props.currentStore.hours.fri}
-                  </span>
-                  <span className="sidebar-store__text">
-                    Sat: {this.props.currentStore.hours.sat}
-                  </span>
-                  <span className="sidebar-store__text">
-                    Sun: {this.props.currentStore.hours.sun}
-                  </span>
+                  {
+                    Object.keys(currentStore.hours).map( (day, i) =>
+                      <span key={ weekDays[i] } className="sidebar-store__text">
+                        { weekDays[i] }: { currentStore.hours[day] }
+                      </span>
+                    )
+                  }
                 </div>
               : ''
             }
           </div>
           :
-          <div>Store info will be here</div>
+          <div className="sidebar-placeholder">Store info will be here</div>
       }
     </div>
   }

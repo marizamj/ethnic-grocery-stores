@@ -67,12 +67,17 @@ html, body {
   width: 250px;
   margin-top: 80px;
   height: 100%;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .sidebar {
   box-shadow: 1px 0px 5px 0px #bbb;
-  padding-bottom: 20px;
+  padding-bottom: 150px;
+}
+
+.sidebar-placeholder {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .admin {
@@ -120,13 +125,8 @@ html, body {
 }
 
 .admin-store-title,
-.sidebar-store__adress,
-.sidebar-store__description,
-.sidebar-store__contacts,
-.sidebar-store__website,
-.sidebar-store__email,
+.sidebar-store__field,
 .sidebar-store__type,
-.sidebar-store__telephone,
 .sidebar-store__hours {
   padding-left: 10px;
   font-size: 18px;
