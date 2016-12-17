@@ -42,6 +42,17 @@ class App extends Component {
     height: 0
   };
 
+  showMessage(text) {
+    this.setState({ message: { show: true, text } });
+
+    setTimeout(() => {
+      this.setState({ message: { show: 'fade', text } });
+      setTimeout(() => {
+        this.setState({ message: { show: false, text: '' } });
+      }, 1000);
+    }, 2000);
+  }
+
   componentDidMount() {
     firebase.database().ref('storeTypes').on('value', snapshot => {
       this.setState({
@@ -127,14 +138,7 @@ class App extends Component {
               this.setState({ 'add-store': false });
 
               if (msg) {
-                this.setState({ message: { show: true, text: msg } });
-
-                setTimeout(() => {
-                  this.setState({ message: { show: 'fade', text: msg } });
-                  setTimeout(() => {
-                    this.setState({ message: { show: false, text: '' } });
-                  }, 1000);
-                }, 2000);
+                this.showMessage(msg);
               }
 
             }} storeTypes={this.state.storeTypes} />
