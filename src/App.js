@@ -37,7 +37,8 @@ class App extends Component {
     message: {
       show: false,
       text: ''
-    }
+    },
+    height: 0
   };
 
   componentDidMount() {
@@ -60,6 +61,12 @@ class App extends Component {
         stores: toArrayStores(snapshot.val())
       });
     });
+  }
+
+  componentDidUpdate() {
+    if (this.state.height !== document.body.scrollHeight) {
+      this.setState({ height: document.body.scrollHeight });
+    }
   }
 
   render() {
@@ -89,9 +96,8 @@ class App extends Component {
         popup={this.state.popup}
         user={this.state.user} token={this.state.token}
         stores={this.state.stores}
-        storeTypes={this.state.storeTypes}>
-          <div>3</div>
-        </Header>
+        storeTypes={this.state.storeTypes} />
+
         <Sidebar currentStore={this.state.currentStore} />
 
         <GMap filter={this.state.filter}
@@ -102,7 +108,7 @@ class App extends Component {
 
         {
           this.state['add-store'] ?
-            <div className="map-screen"></div>
+            <div className="map-screen" style={ { height: this.state.height } }></div>
             : ''
         }
 

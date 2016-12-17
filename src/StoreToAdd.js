@@ -22,7 +22,9 @@ class StoreToAdd extends Component {
         { edit: false, title: 'Telephone:', content: store.telephone },
         { edit: false, title: 'Hours:', content: '' },
         { edit: false, title: 'Lat:', content: '' },
-        { edit: false, title: 'Long:', content: '' }
+        { edit: false, title: 'Long:', content: '' },
+        { edit: false, title: 'Sender name:', content: store.senderName },
+        { edit: false, title: 'Sender email:', content: store.senderEmail }
       ]
     });
   }
