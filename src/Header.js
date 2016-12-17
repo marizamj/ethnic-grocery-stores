@@ -34,6 +34,7 @@ class Header extends Component {
         <div className="search-pic"></div>
         <input type="text"
           name="search"
+          ref="search"
           placeholder="Search.."
           onChange={ e => this.setState({ searchValue: e.target.value }) } />
 
@@ -43,7 +44,12 @@ class Header extends Component {
                 {
                   this.state.matches.map(store =>
                     <div key={store.title}
-                      className="search-matches__item">
+                      className="search-matches__item"
+                      onClick={ e => {
+                        this.props.onOpenMatched(store);
+                        this.setState({ matches: [], searchValue: '' });
+                        this.refs.search.value = '';
+                      }}>
                       <span className="blue-color">{ store.title }</span>, { store.adress }
                       </div>)
                 }

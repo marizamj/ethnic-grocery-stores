@@ -12,7 +12,7 @@ class Sidebar extends Component {
 
     return <div className="sidebar">
       {
-        currentStore ?
+        currentStore.title ?
           <div className="sidebar-store">
             <div className="sidebar-store__name">
               {currentStore.title}<br />

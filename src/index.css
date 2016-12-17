@@ -268,12 +268,12 @@ html, body {
   position: absolute;
   line-height: 30px;
   margin-left: 60px;
-  background: white;
   border-radius: 10px;
   border: 1px solid #ddd;
-  box-shadow: 1px 0px 5px 0px #ddd;
+  box-shadow: 1px 2px 5px 1px #ddd;
   width: 500px;
   cursor: pointer;
+  background: #fbfbfb;
 }
 
 .search-matches__item {
@@ -282,7 +282,7 @@ html, body {
 }
 
 .search-matches__item:hover {
-  background: #f7f7f7;
+  background: #eee;
 }
 
 .search-matches__item:first-child {
@@ -495,7 +495,11 @@ input[type="text"] {
 }
 
 .blue-color {
-  color: #61a6c6;
+  color: #4d849e;
+}
+
+.blue-color:hover {
+  /*color: blue;*/
 }
 
 .transition-opacity {

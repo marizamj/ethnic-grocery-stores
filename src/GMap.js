@@ -16,7 +16,8 @@ let map;
 class GMap extends Component {
   state = {
     stores: [],
-    markers: []
+    markers: [],
+    activeMarker: null
   };
 
   renderMarkers(props = this.props, state = this.state) {
@@ -34,6 +35,12 @@ class GMap extends Component {
     }
 
     const newMarkers = storesToShow.map(store => {
+      // let currentTitle = '';
+
+      // if (props.currentStore) {
+      //   currentTitle = props.currentStore.title;
+      // }
+
       return new google.maps.Marker({
         position: store.latLng,
         title: store.name,
@@ -45,6 +52,7 @@ class GMap extends Component {
 
     newMarkers.forEach(marker => {
       marker.setMap(map);
+
       marker.addListener('click', () => this.props.onOpenStore(marker.store));
     });
   }
@@ -52,6 +60,18 @@ class GMap extends Component {
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.filter !== this.props.filter) {
       this.renderMarkers(nextProps, nextState);
+    }
+
+    if (nextProps.currentStore.title !== this.props.currentStore.title) {
+      this.state.markers.forEach(marker => {
+        if (marker.store.title === nextProps.currentStore.title) {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+
+        if (marker.store.title === this.props.currentStore.title) {
+          marker.setAnimation(null);
+        }
+      });
     }
   }
 

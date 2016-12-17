@@ -31,6 +31,7 @@ class App extends Component {
     'add-store': false,
     stores: [],
     storeTypes: [],
+    currentStore: {},
     user: { email: '' },
     token: null,
     filter: 'Show all',
@@ -92,6 +93,8 @@ class App extends Component {
           this.setState({ 'add-store': true });
         }} onFilterChange={ e => {
           this.setState({ filter: e.target.value });
+        }} onOpenMatched={ store => {
+          this.setState({ currentStore: store });
         }}
         popup={this.state.popup}
         user={this.state.user} token={this.state.token}
@@ -103,8 +106,7 @@ class App extends Component {
         <GMap filter={this.state.filter}
           onOpenStore={ store => {
             this.setState({ currentStore: store });
-          }}
-        />
+          }} currentStore={this.state.currentStore} />
 
         {
           this.state['add-store'] ?
