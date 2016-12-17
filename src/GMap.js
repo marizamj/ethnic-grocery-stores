@@ -35,12 +35,6 @@ class GMap extends Component {
     }
 
     const newMarkers = storesToShow.map(store => {
-      // let currentTitle = '';
-
-      // if (props.currentStore) {
-      //   currentTitle = props.currentStore.title;
-      // }
-
       return new google.maps.Marker({
         position: store.latLng,
         title: store.name,
@@ -52,7 +46,6 @@ class GMap extends Component {
 
     newMarkers.forEach(marker => {
       marker.setMap(map);
-
       marker.addListener('click', () => this.props.onOpenStore(marker.store));
     });
   }
@@ -82,8 +75,8 @@ class GMap extends Component {
       google = window.google;
 
       map = new google.maps.Map(this.refs.node, {
-        center: { lat: 52.368717, lng: 4.947490 },
-        zoom: 12
+        center: { lat: 52.363717, lng: 4.927490 },
+        zoom: 13
       });
 
       firebase.database().ref('stores').on('value', snapshot => {

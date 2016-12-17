@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 
 class Message extends Component {
   render() {
-    return <div className={
-      this.props.msg.show ?
-        'message'
-        :
-        'message transition-opacity'
-    }>
+    let classes;
+
+    if (this.props.msg.show === 'fade') {
+      classes = 'message transition-opacity';
+    } else if (this.props.msg.show) {
+      classes = 'message';
+    } else {
+      classes = 'hidden';
+    }
+
+    return <div className={classes}>
       { this.props.msg.text }
     </div>
   }

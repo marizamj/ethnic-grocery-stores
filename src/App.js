@@ -80,7 +80,6 @@ class App extends Component {
 
         <Header onLogin={ (user, token) => {
           this.setState({ user, token });
-          console.log(user);
         }} onLogout={ () => {
           firebase.auth().signOut().then(() => {
             this.setState({ user: { email: '' } });
@@ -131,7 +130,10 @@ class App extends Component {
                 this.setState({ message: { show: true, text: msg } });
 
                 setTimeout(() => {
-                  this.setState({ message: { show: false, text: msg } });
+                  this.setState({ message: { show: 'fade', text: msg } });
+                  setTimeout(() => {
+                    this.setState({ message: { show: false, text: '' } });
+                  }, 1000);
                 }, 2000);
               }
 
