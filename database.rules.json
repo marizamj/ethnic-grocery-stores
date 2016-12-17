@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "stores": {
+      ".read": "true",
+      ".write": "auth.email === 'marizamj@gmail.com'"
+    },
+    "storeTypes": {
+      ".read": "true",
+      ".write": "auth.email === 'marizamj@gmail.com'"
+    },
+    "newStores": {
+      ".read": "auth.email === 'marizamj@gmail.com'",
+      ".write": "auth != null"
+    }
+  }
+}
