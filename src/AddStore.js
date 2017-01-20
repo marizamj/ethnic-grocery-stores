@@ -57,7 +57,7 @@ class AddStore extends Component {
   }
 
   render() {
-    return <div className="add-store-window">
+    return <div className="floating-window">
       <div className="add-store-window__title">Add new store</div>
       <div className="add-store-window__close" onClick={() => {
         this.props.onClose();

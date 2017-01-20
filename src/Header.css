@@ -74,6 +74,7 @@
 }
 
 .google-login,
+.fb-share-btn,
 .avatar {
   margin-top: 20px;
   margin-right: 30px;
@@ -88,6 +89,16 @@
 .google-login {
   background: url('../images/google-icon.png');
   background-size: cover;
+}
+
+.fb-share-btn {
+  background: url('../images/fb-logo2.png');
+  background-size: contain;
+  opacity: 0.5;
+}
+
+.fb-share-btn:hover {
+  opacity: 0.8;
 }
 
 .avatar {
@@ -154,4 +165,15 @@
 .popup:after {
   right: 22px;
   top: -9px;
+}
+
+.fb-share-button {
+  opacity: 0.5;
+  top: 29px;
+  /*float: right;*/
+  right: -80%;
+}
+
+.fb-share-button:hover {
+  opacity: 0.9;
 }

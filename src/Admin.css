@@ -40,7 +40,7 @@
 
 .admin-store-title__open {
   color: #fff;
-  background: #f37e7f;
+  background: #f37e7f !important;
 }
 
 .admin-store-info {

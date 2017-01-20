@@ -73,6 +73,27 @@ class App extends Component {
         stores: toArrayStores(snapshot.val())
       });
     });
+
+    window.fbAsyncInit = function() {
+        //SDK loaded, initialize it
+        window.FB.init({
+            appId      : '702167243294973',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+        //JS SDK initialized, now you can use it
+        window.FB.XFBML.parse();
+        window.FB.AppEvents.logPageView();
+    };
+
+    //load the JavaScript SDK
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   }
 
   componentDidUpdate() {
@@ -101,6 +122,12 @@ class App extends Component {
           this.setState({ popup: 'visible' });
         }} onAddStore={ () => {
           this.setState({ 'add-store': true });
+        }} onFbShare={ () => {
+          window.FB.ui({
+            hashtag: '#EthnicGroceryStores',
+            method: 'share',
+            href: 'https://ethnic-grocery-stores.firebaseapp.com/',
+          }, function(response){});
         }} onFilterChange={ e => {
           this.setState({ filter: e.target.value });
         }} onOpenMatched={ store => {

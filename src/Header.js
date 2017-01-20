@@ -86,6 +86,10 @@ class Header extends Component {
           }}></div>
       }
 
+      <div className="fb-share-btn" onClick={ () => {
+        this.props.onFbShare();
+      }} ></div>
+
       {
         this.props.user.email ?
           <div className="add-store" onClick={() => {
@@ -110,5 +114,19 @@ class Header extends Component {
     </div>
   }
 }
+
+/*
+<div className="fb-share-btn"
+        data-href="https://ethnic-grocery-stores.firebaseapp.com/"
+        data-layout="button"
+        data-size="large"
+        data-mobile-iframe="true">
+          <a className="fb-xfbml-parse-ignore"
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
+            Share
+          </a>
+      </div>
+*/
 
 export default Header;
