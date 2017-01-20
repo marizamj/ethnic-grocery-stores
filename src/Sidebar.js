@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Sidebar.css';
 
 const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 
@@ -10,7 +11,7 @@ class Sidebar extends Component {
   render() {
     const { currentStore } = this.props;
 
-    return <div className="sidebar">
+    return <div className="sidebar fixed">
       {
         currentStore.title ?
           <div className="sidebar-store">

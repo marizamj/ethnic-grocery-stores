@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './GMap.css';
 
 const firebase = require('firebase');
 
@@ -75,7 +76,7 @@ class GMap extends Component {
       google = window.google;
 
       map = new google.maps.Map(this.refs.node, {
-        center: { lat: 52.363717, lng: 4.927490 },
+        center: { lat: 52.363717, lng: 4.877490 },
         zoom: 13
       });
 

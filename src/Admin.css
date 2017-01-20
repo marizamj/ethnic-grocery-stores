@@ -1,0 +1,102 @@
+.admin {
+  right: 0;
+  box-shadow: -1px 0px 5px 0px #bbb;
+  margin-right: -230px;
+  transition: 0.5s margin-right ease-out;
+  padding-bottom: 80px;
+}
+
+.admin-opened {
+  margin-right: 0;
+  transition: 0.5s margin-right ease-out;
+}
+
+.arrow {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  background-image: url(../images/arrow-left.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: 0.7s transform ease-out;
+}
+
+.arrow-opened {
+  transform: rotateY(180deg);
+  transition: 0.7s transform ease-out;
+}
+
+.admin-title {
+  padding-left: 10px;
+  border-bottom: none;
+}
+
+.admin-store-title {
+  cursor: pointer;
+  border-top: 1px solid #ccc;
+}
+
+.admin-store-title__open {
+  color: #fff;
+  background: #f37e7f;
+}
+
+.admin-store-info {
+  margin-top: 5px;
+  padding: 0 20px;
+  text-align: left;
+  font-size: 16px;
+  position: relative;
+  overflow: visible;
+  margin-bottom: 60px;
+}
+
+.admin-store-info__text {
+  color: #61a6c6;
+  font-size: 14px;
+}
+
+.admin-store-info__field {
+  cursor: pointer;
+}
+
+.admin-store-info__textarea {
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  height: 33px;
+}
+
+.admin-store-submit,
+.admin-store-delete {
+  display: inline-block;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 16px;
+  position: absolute;
+}
+
+.admin-store-submit {
+  left: 55px;
+}
+
+.admin-store-delete {
+  right: 55px;
+}
+
+.admin-add-type {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 20px;
+  border-left: none;
+  border-right: none;
+}
+
+.admin-add-type__btn {
+  margin-left: 80px;
+  width: 50px;
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 16px;
+}

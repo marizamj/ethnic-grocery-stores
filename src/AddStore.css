@@ -1,0 +1,75 @@
+.add-store-window {
+  position: absolute;
+  top: 90px;
+  width: 500px;
+  z-index: 999999999999999999;
+  background: white;
+  margin-left: 50%;
+  margin-top: 10px;
+  left: -250px;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 1px 0px 5px 0px #bbb;
+  margin-bottom: 50px;
+}
+
+.add-store-window__title {
+  text-align: center;
+}
+
+.add-store-window__text,
+.add-store-window__text .req {
+  font-size: 14px;
+  text-align: center;
+}
+
+[name="other-store-type"] {
+  margin-top: 10px;
+}
+
+.store-type {
+  float: left;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  background: #dfdfdf;
+  padding: 2px 5px 2px 0px;
+}
+
+.req {
+  color: red;
+}
+
+.add-store-window__submit {
+  margin-left: 190px;
+  clear: both;
+  padding: 10px;
+  width: 90px;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+  top: 10px;
+}
+
+.add-store-window__submit:hover {
+  top: 11px;
+  left: 1px;
+}
+
+.add-store-window__close {
+  position: absolute;
+  right: 13px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.left-col,
+.right-col {
+  margin-top: 10px;
+  width: 50%;
+  text-align: center;
+}
+
+.input-label {
+  margin-top: 10px;
+}

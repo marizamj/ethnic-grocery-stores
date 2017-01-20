@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Header.css';
 
 const firebase = require('firebase');
 
@@ -29,7 +30,7 @@ class Header extends Component {
   }
 
   render() {
-    return <div className="header">
+    return <div className="header fixed">
       <div className="search">
         <div className="search-pic"></div>
         <input type="text"

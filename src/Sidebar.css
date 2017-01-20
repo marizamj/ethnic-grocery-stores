@@ -1,0 +1,39 @@
+.sidebar {
+  box-shadow: 1px 0px 5px 0px #bbb;
+  padding-bottom: 150px;
+}
+
+.sidebar-placeholder {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.sidebar-store__type {
+  margin-bottom: 5px;
+}
+
+.sidebar-store__desc {
+  font-size: 14px;
+  color: #61a6c6;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.sidebar-store__text {
+  display: block;
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+.sidebar-store__text a {
+  text-decoration: none;
+  color: #00567e;
+}
+
+.sidebar-store__text a:visited {
+  color: #00567e;
+}
+
+.sidebar-store__hours .sidebar-store__text {
+  font-size: 16px;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Admin.css';
 
 const firebase = require('firebase');
 
@@ -22,7 +23,7 @@ class Admin extends Component {
 
   render() {
     return this.props.user.email === 'marizamj@gmail.com' ?
-      <div className="admin">
+      <div className="admin fixed">
         <div className="arrow" onClick={ e => {
           e.target.classList.toggle('arrow-opened');
           e.target.parentNode.classList.toggle('admin-opened');
