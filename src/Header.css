@@ -98,13 +98,14 @@
 }
 
 .fb-share-btn:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .avatar {
   display: inline-block;
 }
 
+.fb-share-btn:hover:before,
 .google-login:hover:before,
 .popup {
   position: absolute;
@@ -119,9 +120,17 @@
 }
 
 .google-login:hover:before {
+  content: 'Login with Google';
+}
+
+.fb-share-btn:hover:before {
+  content: 'Share with Facebook';
+}
+
+.fb-share-btn:hover:before,
+.google-login:hover:before {
   height: 15px;
   right: 10px;
-  content: 'Login with Google';
   font-size: 14px;
 }
 
@@ -146,11 +155,13 @@
   font-size: 14px;
 }
 
+.fb-share-btn:hover:after,
 .google-login:hover:after {
   top: 64px;
   right: 42px;
 }
 
+.fb-share-btn:hover:after,
 .google-login:hover:after,
 .popup:after {
   content: '';
@@ -162,18 +173,11 @@
   border-color: transparent transparent #333 transparent;
 }
 
+.fb-share-btn:hover:after {
+  right: 112px;
+}
+
 .popup:after {
   right: 22px;
   top: -9px;
-}
-
-.fb-share-button {
-  opacity: 0.5;
-  top: 29px;
-  /*float: right;*/
-  right: -80%;
-}
-
-.fb-share-button:hover {
-  opacity: 0.9;
 }
