@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './AddStore.css';
+import './ModalWindow.css';
 
 class AddStore extends Component {
   state = {
@@ -57,13 +57,13 @@ class AddStore extends Component {
   }
 
   render() {
-    return <div className="floating-window">
-      <div className="add-store-window__title">Add new store</div>
-      <div className="add-store-window__close" onClick={() => {
+    return <div className="modal-window">
+      <div className="modal-window__title">Add new store</div>
+      <div className="modal-window__close" onClick={() => {
         this.props.onClose();
       }}>&#10005;</div>
-      <div className="add-store-window__text">(<span className="req">*</span> - required fields)</div>
-      <form className="add-store-window__form">
+      <div className="modal-window__caption">(<span className="req">*</span> - required fields)</div>
+      <form className="modal-window__form">
         <div className="float-l left-col">
           {
             this.state.fields.required.map(field =>
@@ -88,7 +88,7 @@ class AddStore extends Component {
 
                 {
                   field.caption ?
-                    <div className="add-store-window__text">{field.caption}</div>
+                    <div className="modal-window__caption">{field.caption}</div>
                     : ""
                 }
               </div>
@@ -107,7 +107,7 @@ class AddStore extends Component {
                 />
                 {
                   field.caption ?
-                    <div className="add-store-window__text">
+                    <div className="modal-window__caption">
                       {field.caption}
                     </div>
                     : ''
@@ -117,7 +117,7 @@ class AddStore extends Component {
           }
         </div>
 
-        <div className="btn add-store-window__submit" onClick={() => {
+        <div className="btn modal-window__submit" onClick={() => {
           const checkedTypes = this.state.storeTypes.filter(store => store.checked);
 
           const isReqFilled =

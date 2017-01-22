@@ -1,4 +1,4 @@
-.floating-window {
+.modal-window {
   position: absolute;
   top: 5%;
   height: 90%;
@@ -7,23 +7,33 @@
   z-index: 999999999999999999;
   background: white;
   margin-left: 50%;
-  /*margin-top: 5%;*/
   left: -25%;
-  /*border-radius: 10px;*/
   padding: 15px;
   box-shadow: 1px 0px 5px 0px #bbb;
-  margin-bottom: 50px;
   overflow: auto;
 }
 
-.add-store-window__title {
+.modal-window__title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.modal-window__caption,
+.modal-window__caption .req {
+  font-size: 14px;
   text-align: center;
 }
 
-.add-store-window__text,
-.add-store-window__text .req {
-  font-size: 14px;
-  text-align: center;
+.modal-window__text {
+  margin-top: 30px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+a {
+  color: #f37e7f;
+  text-decoration: none;
 }
 
 [name="other-store-type"] {
@@ -45,7 +55,7 @@
   color: red;
 }
 
-.add-store-window__submit {
+.modal-window__submit {
   margin-left: 50%;
   left: -45px;
   clear: both;
@@ -57,7 +67,7 @@
   top: 10px;
 }
 
-.add-store-window__close {
+.modal-window__close {
   position: absolute;
   right: 13px;
   top: 10px;
@@ -71,6 +81,14 @@
   text-align: center;
 }
 
+.left-col {
+  padding-left: 10px;
+}
+
 .input-label {
   margin-top: 10px;
+}
+
+.yellow {
+  color: #ffcc00;
 }

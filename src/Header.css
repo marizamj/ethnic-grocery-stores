@@ -1,7 +1,7 @@
 .header {
   z-index: 2147483600;
   width: 100%;
-  min-width: 700px;
+  min-width: 850px;
   height: 80px;
   line-height: 80px;
   padding-left: 30px;
@@ -71,6 +71,20 @@
   background: transparent;
   border: none;
   outline-color: #ddd;
+  margin-left: 180px;
+}
+
+.about,
+.add-store {
+  float: right;
+  cursor: pointer;
+  margin-right: 50px;
+  color: #777;
+}
+
+.about:hover,
+.add-store:hover {
+  color: #000;
 }
 
 .google-login,
@@ -89,6 +103,7 @@
 .google-login {
   background: url('../images/google-icon.png');
   background-size: cover;
+  opacity: 0.7;
 }
 
 .fb-share-btn {
@@ -97,7 +112,8 @@
   opacity: 0.5;
 }
 
-.fb-share-btn:hover {
+.fb-share-btn:hover,
+.google-login:hover {
   opacity: 1;
 }
 

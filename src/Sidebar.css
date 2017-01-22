@@ -4,8 +4,12 @@
 }
 
 .sidebar-placeholder {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
-  margin-top: 20px;
+  color: #777;
 }
 
 .sidebar-store__type {
@@ -27,10 +31,6 @@
 
 .sidebar-store__text a {
   text-decoration: none;
-  color: #00567e;
-}
-
-.sidebar-store__text a:visited {
   color: #00567e;
 }
 

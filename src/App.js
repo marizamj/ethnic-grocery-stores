@@ -14,6 +14,7 @@ firebase.initializeApp(config);
 import Header from './Header';
 import GMap from './GMap';
 import AddStore from './AddStore';
+import About from './About';
 import Sidebar from './Sidebar';
 import Admin from './Admin';
 import Message from './Message';
@@ -29,6 +30,7 @@ const toArrayTypes = obj =>
 class App extends Component {
   state = {
     'add-store': false,
+    about: false,
     stores: [],
     storeTypes: [],
     currentStore: {},
@@ -75,18 +77,16 @@ class App extends Component {
     });
 
     window.fbAsyncInit = function() {
-        //SDK loaded, initialize it
         window.FB.init({
             appId      : '702167243294973',
             xfbml      : true,
             version    : 'v2.8'
         });
-        //JS SDK initialized, now you can use it
+
         window.FB.XFBML.parse();
         window.FB.AppEvents.logPageView();
     };
 
-    //load the JavaScript SDK
     (function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
@@ -122,6 +122,8 @@ class App extends Component {
           this.setState({ popup: 'visible' });
         }} onAddStore={ () => {
           this.setState({ 'add-store': true });
+        }} onAbout={ () => {
+          this.setState({ 'about': true });
         }} onFbShare={ () => {
           window.FB.ui({
             hashtag: '#EthnicGroceryStores',
@@ -146,9 +148,9 @@ class App extends Component {
           }} currentStore={this.state.currentStore} />
 
         {
-          this.state['add-store'] ?
-            <div className="map-screen" style={ { height: this.state.height } }></div>
-            : ''
+          this.state['add-store'] || this.state.about ?
+            <div className="map-screen"></div>
+            : null
         }
 
         <Message ref="msg" msg={this.state.message} />
@@ -169,7 +171,15 @@ class App extends Component {
               }
 
             }} storeTypes={this.state.storeTypes} />
-            : ''
+            : null
+        }
+
+        {
+          this.state.about ?
+            <About onClose={ () => {
+              this.setState({ about: false });
+            }} />
+            : null
         }
 
         <Admin user={this.state.user}

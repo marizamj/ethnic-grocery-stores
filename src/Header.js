@@ -60,6 +60,19 @@ class Header extends Component {
 
       </div>
 
+      <select className="filter" onChange={ e => {
+        this.props.onFilterChange(e);
+      }}>
+        <option value="Show all" default>Show all</option>
+        {
+          this.props.storeTypes ?
+            this.props.storeTypes.map(store =>
+              <option value={store.name} key={store.id}>{store.name}</option>)
+            :
+            ''
+        }
+      </select>
+
       {
         this.props.user.email ?
           <div className="avatar"
@@ -90,6 +103,10 @@ class Header extends Component {
         this.props.onFbShare();
       }} ></div>
 
+      <div className="about" onClick={ () => {
+        this.props.onAbout();
+      }}>About</div>
+
       {
         this.props.user.email ?
           <div className="add-store" onClick={() => {
@@ -99,34 +116,8 @@ class Header extends Component {
           ''
       }
 
-      <select className="filter" onChange={ e => {
-        this.props.onFilterChange(e);
-      }}>
-        <option value="Show all" default>Show all</option>
-        {
-          this.props.storeTypes ?
-            this.props.storeTypes.map(store =>
-              <option value={store.name} key={store.id}>{store.name}</option>)
-            :
-            ''
-        }
-      </select>
     </div>
   }
 }
-
-/*
-<div className="fb-share-btn"
-        data-href="https://ethnic-grocery-stores.firebaseapp.com/"
-        data-layout="button"
-        data-size="large"
-        data-mobile-iframe="true">
-          <a className="fb-xfbml-parse-ignore"
-            target="_blank"
-            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
-            Share
-          </a>
-      </div>
-*/
 
 export default Header;

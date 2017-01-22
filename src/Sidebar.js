@@ -64,7 +64,10 @@ class Sidebar extends Component {
             }
           </div>
           :
-          <div className="sidebar-placeholder">Store info will be here</div>
+          <div className="sidebar-placeholder" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ marginTop: 0 }}>Click marker <br /> to see store info</div>
+            <div style={{ marginTop: 40 }}>Login with Google <br /> to add a store</div>
+          </div>
       }
     </div>
   }
