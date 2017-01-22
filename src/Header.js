@@ -36,6 +36,7 @@ class Header extends Component {
         <input type="text"
           name="search"
           ref="search"
+          size="20"
           placeholder="Search.."
           onChange={ e => this.setState({ searchValue: e.target.value }) } />
 
