@@ -154,6 +154,7 @@
   right: 19px;
   visibility: hidden;
   text-align: center;
+  min-width: 175px;
 }
 
 .popup-name {

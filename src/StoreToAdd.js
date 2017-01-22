@@ -15,7 +15,7 @@ class StoreToAdd extends Component {
       fields: [
         { edit: false, title: 'Type', value: store.type ? store.type.map(type => type.name).join(', ') : '' },
         { edit: false, title: 'Other type', value: store['other-store-type'] },
-        { edit: false, title: 'Adress', value: store.adress },
+        { edit: false, title: 'Address', value: store.address },
         { edit: false, title: 'Description', value: store.description },
         { edit: false, title: 'Email', value: store.email },
         { edit: false, title: 'Website', value: store.website },

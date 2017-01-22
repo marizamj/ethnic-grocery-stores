@@ -22,7 +22,7 @@ class Header extends Component {
         const regExp = new RegExp(nextState.searchValue, 'gi');
 
         matches = this.props.stores.filter(store =>
-          store.title.match(regExp) || store.adress.match(regExp));
+          store.title.match(regExp) || store.address.match(regExp));
       }
 
       this.setState({ matches });
@@ -51,7 +51,7 @@ class Header extends Component {
                         this.setState({ matches: [], searchValue: '' });
                         this.refs.search.value = '';
                       }}>
-                      <span className="blue-color">{ store.title }</span>, { store.adress }
+                      <span className="blue-color">{ store.title }</span>, { store.address }
                       </div>)
                 }
               </div>

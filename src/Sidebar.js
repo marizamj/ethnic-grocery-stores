@@ -5,7 +5,7 @@ const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 
 class Sidebar extends Component {
   state = {
-    fields: [ 'Adress', 'Description', 'Email', 'Telephone', 'Keywords' ]
+    fields: [ 'Address', 'Description', 'Email', 'Telephone', 'Keywords' ]
   };
 
   render() {

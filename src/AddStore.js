@@ -12,7 +12,7 @@ class AddStore extends Component {
 
     fields: {
       required: [
-        { title: 'Adress', caption: '', placeholder: '' },
+        { title: 'Address', caption: '', placeholder: '' },
         { title: 'Title', caption: '', placeholder: '' },
         { title: 'Type', caption: '', placeholder: '' },
         {
@@ -121,13 +121,13 @@ class AddStore extends Component {
           const checkedTypes = this.state.storeTypes.filter(store => store.checked);
 
           const isReqFilled =
-            Boolean(this.refs.adress.value) &&
+            Boolean(this.refs.address.value) &&
             Boolean(this.refs.title.value) &&
             (checkedTypes.length > 0 || Boolean(this.refs['other-store-type'].value));
 
           if (isReqFilled) {
             const form = {
-              adress: this.refs.adress.value,
+              address: this.refs.address.value,
               title: this.refs.title.value,
               type: checkedTypes,
               'other-store-type': this.refs['other-store-type'].value,
