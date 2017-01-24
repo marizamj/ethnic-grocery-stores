@@ -31,35 +31,32 @@ class Header extends Component {
 
   render() {
     return <div className="header fixed">
-      <div className="search">
-        <div className="search-pic"></div>
-        <input type="text"
-          name="search"
-          ref="search"
-          size="20"
-          placeholder="Search.."
-          onChange={ e => this.setState({ searchValue: e.target.value }) } />
+      <div className="logo float-l"></div>
+      <input type="text"
+        name="search"
+        ref="search"
+        placeholder="Search.."
+        onChange={ e => this.setState({ searchValue: e.target.value }) } />
 
-          {
-            this.state.matches.length > 0 ?
-              <div className="search-matches">
-                {
-                  this.state.matches.map(store =>
-                    <div key={store.title}
-                      className="search-matches__item"
-                      onClick={ e => {
-                        this.props.onOpenMatched(store);
-                        this.setState({ matches: [], searchValue: '' });
-                        this.refs.search.value = '';
-                      }}>
-                      <span className="blue-color">{ store.title }</span>, { store.address }
-                      </div>)
-                }
-              </div>
-              : ''
-          }
+        {
+          this.state.matches.length > 0 ?
+            <div className="search-matches">
+              {
+                this.state.matches.map(store =>
+                  <div key={store.title}
+                    className="search-matches__item"
+                    onClick={ e => {
+                      this.props.onOpenMatched(store);
+                      this.setState({ matches: [], searchValue: '' });
+                      this.refs.search.value = '';
+                    }}>
+                    <span className="blue-color">{ store.title }</span>, { store.address }
+                    </div>)
+              }
+            </div>
+            : ''
+        }
 
-      </div>
 
       <select className="filter" onChange={ e => {
         this.props.onFilterChange(e);
