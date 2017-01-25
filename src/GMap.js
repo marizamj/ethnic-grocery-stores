@@ -5,7 +5,7 @@ const firebase = require('firebase');
 
 const API_KEY = 'AIzaSyDhOc5OMsksRlpNfJFxk-fOGwGLeeBDoCo';
 
-const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
+const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.26`;
 
 const toArrayStores = obj =>
   Object.keys(obj || {}).map(id => ({ id, ...obj[id] }));
@@ -92,7 +92,7 @@ class GMap extends Component {
   }
 
   render() {
-    return <div ref="node" className="gmap"></div>
+    return <div ref="node" className="gmap" width="100%" height="100%"></div>
   }
 }
 

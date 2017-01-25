@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
+
 import './Header.css';
 
 const firebase = require('firebase');
@@ -31,7 +33,7 @@ class Header extends Component {
 
   render() {
     return <div className="header fixed">
-      <div className="logo float-l"></div>
+      <Link to="/"><div className="logo float-l"></div></Link>
       <input type="text"
         name="search"
         ref="search"
@@ -101,21 +103,25 @@ class Header extends Component {
         this.props.onFbShare();
       }} ></div>
 
-      <div className="about" onClick={ () => {
-        this.props.onAbout();
-      }}>About</div>
+
+      <Link to="/about" className="about">About</Link>
 
       {
         this.props.user.email ?
-          <div className="add-store" onClick={() => {
-            this.props.onAddStore();
-          }}>Add store</div>
+          <Link to="/add-store" className="add-store">Add store</Link>
           :
-          ''
+          null
       }
 
     </div>
   }
 }
+
+/*
+
+      <div className="about" onClick={ () => {
+        this.props.onAbout();
+      }}>About</div>
+*/
 
 export default Header;

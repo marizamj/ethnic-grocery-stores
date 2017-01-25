@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 
 const firebase = require('firebase');
 
@@ -9,12 +9,11 @@ var config = {
   storageBucket: "ethnic-grocery-stores.appspot.com",
   messagingSenderId: "131961135840"
 };
+
 firebase.initializeApp(config);
 
 import Header from './Header';
 import GMap from './GMap';
-import AddStore from './AddStore';
-import About from './About';
 import Sidebar from './Sidebar';
 import Admin from './Admin';
 import Message from './Message';
@@ -29,8 +28,6 @@ const toArrayTypes = obj =>
 
 class App extends Component {
   state = {
-    'add-store': false,
-    about: false,
     stores: [],
     storeTypes: [],
     currentStore: {},
@@ -110,6 +107,28 @@ class App extends Component {
         }
       }}>
 
+      {
+        this.props.children && cloneElement(this.props.children, {
+          storeTypes: this.state.storeTypes,
+
+          onAddStoreSubmit: form => {
+            firebase.database().ref('newStores').push({
+              ...form,
+              senderName: this.state.user.displayName,
+              senderEmail: this.state.user.email
+            });
+          },
+
+          onClose: msg => {
+            this.props.router.push('/');
+
+            if (msg) {
+              this.showMessage(msg);
+            }
+          }
+        })
+      }
+
         <Header onLogin={ (user, token) => {
           this.setState({ user, token });
         }} onLogout={ () => {
@@ -120,10 +139,6 @@ class App extends Component {
           });
         }} onAvaClick={ () => {
           this.setState({ popup: 'visible' });
-        }} onAddStore={ () => {
-          this.setState({ 'add-store': true });
-        }} onAbout={ () => {
-          this.setState({ 'about': true });
         }} onFbShare={ () => {
           window.FB.ui({
             hashtag: '#EthnicGroceryStores',
@@ -147,40 +162,7 @@ class App extends Component {
             this.setState({ currentStore: store });
           }} currentStore={this.state.currentStore} />
 
-        {
-          this.state['add-store'] || this.state.about ?
-            <div className="map-screen"></div>
-            : null
-        }
-
         <Message ref="msg" msg={this.state.message} />
-
-        {
-          this.state['add-store'] ?
-            <AddStore onSubmit={form => {
-              firebase.database().ref('newStores').push({
-                ...form,
-                senderName: this.state.user.displayName,
-                senderEmail: this.state.user.email
-              });
-            }} onClose={msg => {
-              this.setState({ 'add-store': false });
-
-              if (msg) {
-                this.showMessage(msg);
-              }
-
-            }} storeTypes={this.state.storeTypes} />
-            : null
-        }
-
-        {
-          this.state.about ?
-            <About onClose={ () => {
-              this.setState({ about: false });
-            }} />
-            : null
-        }
 
         <Admin user={this.state.user}
           onPushStoreToFB={ form => {

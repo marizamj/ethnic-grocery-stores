@@ -3,12 +3,7 @@ import './ModalWindow.css';
 
 class AddStore extends Component {
   state = {
-    storeTypes: this.props.storeTypes.map(store => {
-      return {
-        ...store,
-        checked: false
-      }
-    }),
+    types: [],
 
     fields: {
       required: [
@@ -32,8 +27,23 @@ class AddStore extends Component {
     }
   };
 
+  componentWillReceiveProps({ storeTypes }) {
+    const { types } = this.state;
+
+    if (storeTypes && types.length === 0) {
+      this.setState({
+        types: storeTypes.map(store => {
+          return {
+            ...store,
+            checked: false
+          }
+        })
+      });
+    }
+  }
+
   getTypesContent() {
-    return this.state.storeTypes.map(store =>
+    return this.state.types.map(store =>
       <div
         style={ store.checked ? { background: '#f37e7f', color: '#fff' } : {}}
         className="store-type"
@@ -44,7 +54,7 @@ class AddStore extends Component {
           name="store-type"
           value={store.name}
           onChange={e => {
-            this.setState({ storeTypes: this.state.storeTypes.map(store => {
+            this.setState({ types: this.state.types.map(store => {
               if (store.name === e.target.value) {
                 return { ...store, checked: !store.checked };
               } else {
@@ -54,6 +64,35 @@ class AddStore extends Component {
           }} /> {store.name}
       </div>
     )
+  }
+
+  submit() {
+    const checkedTypes = this.state.types.filter(store => store.checked);
+
+    const isReqFilled =
+      Boolean(this.refs.address.value) &&
+      Boolean(this.refs.title.value) &&
+      (checkedTypes.length > 0 || Boolean(this.refs['other-store-type'].value));
+
+    if (isReqFilled) {
+      const form = {
+        address: this.refs.address.value,
+        title: this.refs.title.value,
+        type: checkedTypes,
+        'other-store-type': this.refs['other-store-type'].value,
+        description: this.refs.description.value,
+        telephone: this.refs.telephone.value,
+        email: this.refs.email.value,
+        website: this.refs.website.value,
+        keywords: this.refs.keywords.value
+      }
+
+      this.props.onAddStoreSubmit(form);
+      this.props.onClose('Thank you!');
+
+    } else {
+      console.log('not filled');
+    }
   }
 
   render() {
@@ -73,7 +112,7 @@ class AddStore extends Component {
                     <div className="input-label">
                       {field.title}<span className="req">*</span>
                     </div>
-                    : ''
+                    : null
                 }
                 {
                   field.title === 'Type' ?
@@ -89,7 +128,7 @@ class AddStore extends Component {
                 {
                   field.caption ?
                     <div className="modal-window__caption">{field.caption}</div>
-                    : ""
+                    : null
                 }
               </div>
             )
@@ -110,7 +149,7 @@ class AddStore extends Component {
                     <div className="modal-window__caption">
                       {field.caption}
                     </div>
-                    : ''
+                    : null
                 }
               </div>
             )
@@ -118,32 +157,7 @@ class AddStore extends Component {
         </div>
 
         <div className="btn modal-window__submit" onClick={() => {
-          const checkedTypes = this.state.storeTypes.filter(store => store.checked);
-
-          const isReqFilled =
-            Boolean(this.refs.address.value) &&
-            Boolean(this.refs.title.value) &&
-            (checkedTypes.length > 0 || Boolean(this.refs['other-store-type'].value));
-
-          if (isReqFilled) {
-            const form = {
-              address: this.refs.address.value,
-              title: this.refs.title.value,
-              type: checkedTypes,
-              'other-store-type': this.refs['other-store-type'].value,
-              description: this.refs.description.value,
-              telephone: this.refs.telephone.value,
-              email: this.refs.email.value,
-              website: this.refs.website.value,
-              keywords: this.refs.keywords.value
-            }
-
-            this.props.onSubmit(form);
-            this.props.onClose('Thank you!');
-
-          } else {
-            console.log('not filled');
-          }
+          this.submit();
         }}>Submit</div>
       </form>
 
