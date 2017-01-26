@@ -22,7 +22,6 @@ class StoreInfo extends Component {
   }
 
   render() {
-    console.log(this.state.store);
     return <div className="sidebar-store">
 
       <div className="sidebar-store__name">
@@ -77,13 +76,20 @@ class StoreInfo extends Component {
             case 'Hours':
               result = (<div key={field} className="sidebar-store__hours">
                 <span className="sidebar-store__desc">Hours: </span>
+                <table className="hours-table"><tbody>
                 {
                   weekDays.map(weekDay =>
-                    <span key={ weekDay } className="sidebar-store__text">
-                      { weekDay }: { this.state.store.hours[weekDay.toLowerCase()] }
-                    </span>
+                    <tr key={ weekDay }>
+                      <td key={ Math.random() }>
+                        { weekDay }:
+                      </td>
+                      <td key={ Math.random() }>
+                        { this.state.store.hours[weekDay.toLowerCase()] }
+                      </td>
+                    </tr>
                   )
                 }
+                </tbody></table>
               </div>);
 
               break;

@@ -33,6 +33,11 @@
   color: #00567e;
 }
 
-.sidebar-store__hours .sidebar-store__text {
+.hours-table {
+  margin-left: 30px;
+}
+
+.hours-table td {
   font-size: 16px;
+  padding: 0 10px 0 0;
 }
