@@ -6,7 +6,15 @@ const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 class StoreInfo extends Component {
   state = {
     store: this.props.store,
-    fields: [ 'Address', 'Description', 'Email', 'Telephone', 'Keywords' ]
+    fields: [
+      'Address',
+      'Description',
+      'Email',
+      'Telephone',
+      'Website',
+      'Hours',
+      'Keywords'
+    ]
   };
 
   componentWillReceiveProps({ store }) {
@@ -14,6 +22,7 @@ class StoreInfo extends Component {
   }
 
   render() {
+    console.log(this.state.store);
     return <div className="sidebar-store">
 
       <div className="sidebar-store__name">
@@ -23,46 +32,73 @@ class StoreInfo extends Component {
       <div className="sidebar-store__type">{this.state.store.type}</div>
 
       {
-        this.state.fields.map(field =>
-          this.state.store[field.toLowerCase()] ?
-            <div key={field} className="sidebar-store__field">
-              <span className="sidebar-store__desc">{field}:</span>
-              <span className="sidebar-store__text">{this.state.store[field.toLowerCase()]}</span>
-            </div>
-          : null
-        )
-      }
+        this.state.fields.map(field => {
+          let result = null;
 
-      {
-        this.state.store.website ?
-          <div className="sidebar-store__field">
-            <span className="sidebar-store__desc">Web:</span>
-            <span className="sidebar-store__text">
-              <a href={this.state.store.website} target="_blank">
-                {
-                  this.state.store.website.length > 20 ?
-                    `${this.state.store.website.slice(0, 20)}...`
-                    : this.state.store.website
-                }
-              </a>
-            </span>
-          </div>
-          : null
-      }
+          if (!this.state.store[field.toLowerCase()]) return result;
 
-      {
-        this.state.store.hours ?
-          <div className="sidebar-store__hours">
-            <span className="sidebar-store__desc">Hours: </span>
-            {
-              weekDays.map(weekDay =>
-                <span key={ weekDay } className="sidebar-store__text">
-                  { weekDay }: { this.state.store.hours[weekDay.toLowerCase()] }
+          switch (field) {
+            case 'Website':
+              result = (<div key={field} className="sidebar-store__field">
+                <span className="sidebar-store__desc">Web:</span>
+                <span className="sidebar-store__text">
+                  <a href={this.state.store.website} target="_blank">
+                    {
+                      this.state.store.website.length > 20 ?
+                        `${this.state.store.website.slice(0, 20)}...`
+                        : this.state.store.website
+                    }
+                  </a>
                 </span>
-              )
-            }
-          </div>
-        : null
+              </div>);
+
+              break;
+
+            case 'Telephone':
+              result = (<div key={field} className="sidebar-store__field">
+                <span className="sidebar-store__desc">Telephone:</span>
+                <span className="sidebar-store__text">
+                  <a href={`tel:+${this.state.store.telephone}`}>{this.state.store.telephone}</a>
+                </span>
+              </div>);
+
+              break;
+
+            case 'Email':
+              result = (<div key={field} className="sidebar-store__field">
+                <span className="sidebar-store__desc">Email:</span>
+                <span className="sidebar-store__text">
+                  <a href={`mailto:+${this.state.store.email}`}>{this.state.store.email}</a>
+                </span>
+              </div>);
+
+              break;
+
+            case 'Hours':
+              result = (<div key={field} className="sidebar-store__hours">
+                <span className="sidebar-store__desc">Hours: </span>
+                {
+                  weekDays.map(weekDay =>
+                    <span key={ weekDay } className="sidebar-store__text">
+                      { weekDay }: { this.state.store.hours[weekDay.toLowerCase()] }
+                    </span>
+                  )
+                }
+              </div>);
+
+              break;
+
+            default:
+              result = (<div key={field} className="sidebar-store__field">
+                <span className="sidebar-store__desc">{field}:</span>
+                <span className="sidebar-store__text">
+                  {this.state.store[field.toLowerCase()]}
+                </span>
+              </div>);
+          }
+
+          return result;
+        })
       }
 
     </div>
