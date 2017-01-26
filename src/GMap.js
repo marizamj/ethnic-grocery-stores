@@ -39,6 +39,8 @@ class GMap extends Component {
       return new google.maps.Marker({
         position: store.latLng,
         title: store.name,
+        animation: store.id === this.props.currentStore.id ?
+          google.maps.Animation.BOUNCE : null,
         store
       });
     });
@@ -47,7 +49,8 @@ class GMap extends Component {
 
     newMarkers.forEach(marker => {
       marker.setMap(map);
-      marker.addListener('click', () => this.props.onOpenStore(marker.store));
+      marker.addListener('click', () =>
+        this.props.router.push(`/stores/${marker.store.id}`));
     });
   }
 

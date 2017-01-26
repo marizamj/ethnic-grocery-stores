@@ -48,7 +48,7 @@ class Header extends Component {
                   <div key={store.title}
                     className="search-matches__item"
                     onClick={ e => {
-                      this.props.onOpenMatched(store);
+                      this.props.router.push(`/stores/${store.id}`);
                       this.setState({ matches: [], searchValue: '' });
                       this.refs.search.value = '';
                     }}>
@@ -116,12 +116,5 @@ class Header extends Component {
     </div>
   }
 }
-
-/*
-
-      <div className="about" onClick={ () => {
-        this.props.onAbout();
-      }}>About</div>
-*/
 
 export default Header;

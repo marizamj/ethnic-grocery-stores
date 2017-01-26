@@ -2,29 +2,12 @@ import React, { Component, cloneElement } from 'react';
 
 const firebase = require('firebase');
 
-var config = {
-  apiKey: "AIzaSyDyRukiPIej168d6elewuZpF7VR4P0ueWU",
-  authDomain: "ethnic-grocery-stores.firebaseapp.com",
-  databaseURL: "https://ethnic-grocery-stores.firebaseio.com",
-  storageBucket: "ethnic-grocery-stores.appspot.com",
-  messagingSenderId: "131961135840"
-};
-
-firebase.initializeApp(config);
-
+import { loadStoreTypes, authListener, loadStores } from './firebaseLoaders'
 import Header from './Header';
 import GMap from './GMap';
 import Sidebar from './Sidebar';
 import Admin from './Admin';
 import Message from './Message';
-
-const toArrayStores = obj =>
-  Object.keys(obj || {}).map(id => ({ id, ...obj[id] }));
-
-const toArrayTypes = obj =>
-  Object.keys(obj || {})
-  .map(id => ({ id, name: obj[id] }))
-  .sort((a, b) => +(a.name > b.name) || +(a.name === b.name) - 1);
 
 class App extends Component {
   state = {
@@ -38,7 +21,7 @@ class App extends Component {
       show: false,
       text: ''
     },
-    height: 0
+    pathname: this.props.location.pathname
   };
 
   showMessage(text) {
@@ -52,50 +35,54 @@ class App extends Component {
     }, 2000);
   }
 
-  componentDidMount() {
-    firebase.database().ref('storeTypes').on('value', snapshot => {
-      this.setState({
-        storeTypes: toArrayTypes(snapshot.val())
-      });
-    });
+  setCurrentStore(newPath) {
+    const newID = newPath.split('/')[2];
 
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({ user });
-      } else {
-        this.setState({ user: { email: '' } });
+    this.setState({ currentStore: this.state.stores.find(store =>
+      store.id === newID) });
+  }
+
+  componentDidMount() {
+    loadStoreTypes(storeTypes => this.setState({ storeTypes }));
+    authListener(user => this.setState({ user }));
+    loadStores(stores => {
+      this.setState({ stores });
+
+      if (this.state.pathname.match(/^\/stores\/.+/)) {
+        this.setCurrentStore(this.state.pathname);
       }
     });
 
-    firebase.database().ref('stores').on('value', snapshot => {
-      this.setState({
-        stores: toArrayStores(snapshot.val())
-      });
-    });
 
     window.fbAsyncInit = function() {
-        window.FB.init({
-            appId      : '702167243294973',
-            xfbml      : true,
-            version    : 'v2.8'
-        });
+      window.FB.init({
+          appId      : '702167243294973',
+          xfbml      : true,
+          version    : 'v2.8'
+      });
 
         window.FB.XFBML.parse();
         window.FB.AppEvents.logPageView();
     };
 
     (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
+      let js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }
 
-  componentDidUpdate() {
-    if (this.state.height !== document.body.scrollHeight) {
-      this.setState({ height: document.body.scrollHeight });
+  componentWillReceiveProps({ location }) {
+    const prevLocation = this.props.location;
+
+    if (prevLocation.pathname !== location.pathname) {
+      this.setState({ pathname: location.pathname });
+
+      if (location.pathname.match(/^\/stores\/.+/)) {
+        this.setCurrentStore(location.pathname);
+      }
     }
   }
 
@@ -120,7 +107,7 @@ class App extends Component {
           },
 
           onClose: msg => {
-            this.props.router.push('/');
+            this.props.router.goBack();
 
             if (msg) {
               this.showMessage(msg);
@@ -129,7 +116,7 @@ class App extends Component {
         })
       }
 
-        <Header onLogin={ (user, token) => {
+        <Header router={this.props.router} onLogin={ (user, token) => {
           this.setState({ user, token });
         }} onLogout={ () => {
           firebase.auth().signOut().then(() => {
@@ -147,8 +134,6 @@ class App extends Component {
           }, function(response){});
         }} onFilterChange={ e => {
           this.setState({ filter: e.target.value });
-        }} onOpenMatched={ store => {
-          this.setState({ currentStore: store });
         }}
         popup={this.state.popup}
         user={this.state.user} token={this.state.token}
@@ -158,9 +143,8 @@ class App extends Component {
         <Sidebar currentStore={this.state.currentStore} />
 
         <GMap filter={this.state.filter}
-          onOpenStore={ store => {
-            this.setState({ currentStore: store });
-          }} currentStore={this.state.currentStore} />
+          router={this.props.router}
+          currentStore={this.state.currentStore} />
 
         <Message ref="msg" msg={this.state.message} />
 
