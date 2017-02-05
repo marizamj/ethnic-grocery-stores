@@ -2,7 +2,8 @@ import React, { Component, cloneElement } from 'react';
 
 const firebase = require('firebase');
 
-import { loadStoreTypes, authListener, loadStores } from './firebaseLoaders'
+import { loadStoreTypes, authListener, loadStores } from './firebaseLoaders';
+import { facebookInit, facebookShare } from './facebookShare';
 import Header from './Header';
 import GMap from './GMap';
 import Sidebar from './Sidebar';
@@ -56,16 +57,12 @@ class App extends Component {
       return;
     }
 
-    const regex = new RegExp(searchValue, 'i')
+    const regex = new RegExp(searchValue, 'i');
 
-    this.setState({
-      storesToShow: this.state.stores.filter(store =>
-        store.type.match(regex) ||
-        store.keywords.match(regex) ||
-        store.title.match(regex) ||
-        store.address.match(regex)
-      )
-    });
+    this.setState({ storesToShow: this.state.stores.filter(store => {
+      const { type, keywords, title, address } = store;
+      return [ type, keywords, title, address ].some(el => el.match(regex));
+    })});
   }
 
   search(searchValue) {
@@ -87,25 +84,7 @@ class App extends Component {
       }
     });
 
-
-    window.fbAsyncInit = function() {
-      window.FB.init({
-          appId      : '702167243294973',
-          xfbml      : true,
-          version    : 'v2.8'
-      });
-
-        window.FB.XFBML.parse();
-        window.FB.AppEvents.logPageView();
-    };
-
-    (function(d, s, id){
-      let js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    facebookInit();
   }
 
   componentWillReceiveProps({ location }) {
@@ -169,13 +148,7 @@ class App extends Component {
           });
         }} onAvaClick={ () => {
           this.setState({ popup: 'visible' });
-        }} onFbShare={ () => {
-          window.FB.ui({
-            hashtag: '#EthnicGroceryStores',
-            method: 'share',
-            href: 'https://ethnic-grocery-stores.firebaseapp.com/',
-          }, function(response){});
-        }}
+        }} onFbShare={ () =>  facebookShare() }
         search={this.search.bind(this)}
         {...this.state} />
 
