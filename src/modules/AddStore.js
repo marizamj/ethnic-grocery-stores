@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './ModalWindow.css';
+import '../css/ModalWindow.css';
 
 class AddStore extends Component {
   state = {

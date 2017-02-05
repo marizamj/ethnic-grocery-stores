@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory } from 'react-router';
 
-import App from './App';
-import About from './About';
-import AddStore from './AddStore';
-import './index.css';
+import App from './modules/App';
+import About from './modules/About';
+import AddStore from './modules/AddStore';
+import './css/index.css';
 
 const firebase = require('firebase');
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Admin.css';
+import '../css/Admin.css';
 
 const firebase = require('firebase');
 

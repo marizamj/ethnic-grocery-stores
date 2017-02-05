@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './GMap.css';
+import '../css/GMap.css';
 
 const API_KEY = 'AIzaSyDhOc5OMsksRlpNfJFxk-fOGwGLeeBDoCo';
 

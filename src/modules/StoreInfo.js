@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Sidebar.css';
 
 const weekDays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ];
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import './Header.css';
+import '../css/Header.css';
 
 const firebase = require('firebase');
 

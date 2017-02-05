@@ -2,8 +2,8 @@ import React, { Component, cloneElement } from 'react';
 
 const firebase = require('firebase');
 
-import { loadStoreTypes, authListener, loadStores } from './firebaseLoaders';
-import { facebookInit, facebookShare } from './facebookShare';
+import { loadStoreTypes, authListener, loadStores } from '../helpers/firebaseLoaders';
+import { facebookInit, facebookShare } from '../helpers/facebookShare';
 import Header from './Header';
 import GMap from './GMap';
 import Sidebar from './Sidebar';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import StoreInfo from './StoreInfo';
 import StoresList from './StoresList';
-import './Sidebar.css';
+import '../css/Sidebar.css';
 
 const PLaceholder = () =>
   <div className="sidebar-placeholder" style={{ display: 'flex', flexDirection: 'column' }}>
