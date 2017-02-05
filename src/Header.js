@@ -5,23 +5,26 @@ import './Header.css';
 
 const firebase = require('firebase');
 
-window.firebase = firebase;
-
 class Header extends Component {
   state ={
-    searchValue: '',
-    matches: []
+    searchInput: '',
+    matches: [],
+    filter: this.props.filter,
   };
 
+  componentWillReceiveProps({ filter }) {
+    this.setState({ filter });
+  }
+
   componentWillUpdate(_, nextState) {
-    if (nextState.searchValue !== this.state.searchValue) {
+    if (nextState.searchInput !== this.state.searchInput) {
       let matches;
 
-      if (!nextState.searchValue) {
+      if (!nextState.searchInput) {
         matches = [];
 
       } else {
-        const regExp = new RegExp(nextState.searchValue, 'gi');
+        const regExp = new RegExp(nextState.searchInput, 'gi');
 
         matches = this.props.stores.filter(store =>
           store.title.match(regExp) || store.address.match(regExp));
@@ -31,14 +34,28 @@ class Header extends Component {
     }
   }
 
+  clearSearch() {
+    this.setState({ matches: [], searchInput: '' });
+    this.refs.search.value = '';
+  }
+
+  searchAndClear(searchInput) {
+    this.props.search(searchInput);
+    this.clearSearch();
+  }
+
   render() {
     return <div className="header fixed">
       <Link to="/"><div className="logo float-l"></div></Link>
       <input type="text"
+        className="search float-l"
         name="search"
         ref="search"
         placeholder="Search.."
-        onChange={ e => this.setState({ searchValue: e.target.value }) } />
+        onChange={ e => this.setState({ searchInput: e.target.value }) }
+        onKeyUp={ e => {
+          if (e.keyCode === 13) this.searchAndClear(this.state.searchInput);
+        }} />
 
         {
           this.state.matches.length > 0 ?
@@ -49,27 +66,32 @@ class Header extends Component {
                     className="search-matches__item"
                     onClick={ e => {
                       this.props.router.push(`/stores/${store.id}`);
-                      this.setState({ matches: [], searchValue: '' });
-                      this.refs.search.value = '';
+                      this.clearSearch();
                     }}>
                     <span className="blue-color">{ store.title }</span>, { store.address }
-                    </div>)
+                  </div>)
               }
             </div>
-            : ''
+            : null
         }
 
+      <div className="search-btn float-l" onClick={ e => {
+        if (this.state.searchInput !== '') {
+          this.searchAndClear(this.state.searchInput);
+        }
+      }}></div>
 
-      <select className="filter" onChange={ e => {
-        this.props.onFilterChange(e);
-      }}>
-        <option value="Show all" default>Show all</option>
+
+      <select className="filter float-l" value={this.state.filter.toLowerCase()}
+        onChange={ e => this.searchAndClear(e.target.value) }>
+        <option value="show-all" default >Show all</option>
         {
           this.props.storeTypes ?
             this.props.storeTypes.map(store =>
-              <option value={store.name} key={store.id}>{store.name}</option>)
-            :
-            ''
+              <option value={store.name.toLowerCase()} key={store.id} >
+                {store.name}
+              </option>)
+              : null
         }
       </select>
 
@@ -109,8 +131,7 @@ class Header extends Component {
       {
         this.props.user.email ?
           <Link to="/add-store" className="add-store">Add store</Link>
-          :
-          null
+          : null
       }
 
     </div>

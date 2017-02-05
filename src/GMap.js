@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import './GMap.css';
 
-const firebase = require('firebase');
-
 const API_KEY = 'AIzaSyDhOc5OMsksRlpNfJFxk-fOGwGLeeBDoCo';
 
 const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.26`;
-
-const toArrayStores = obj =>
-  Object.keys(obj || {}).map(id => ({ id, ...obj[id] }));
-
 
 let google;
 let map;
@@ -18,7 +12,7 @@ class GMap extends Component {
   state = {
     stores: [],
     markers: [],
-    activeMarker: null
+    currentStore: this.props.currentStore
   };
 
   renderMarkers(props = this.props, state = this.state) {
@@ -26,20 +20,11 @@ class GMap extends Component {
       marker.setMap(null);
     });
 
-    let storesToShow;
-
-    if (props.filter === 'Show all') {
-      storesToShow = state.stores;
-    } else {
-      storesToShow = state.stores.filter(store =>
-        store.type.split(', ').some(type => type === props.filter));
-    }
-
-    const newMarkers = storesToShow.map(store => {
+    const newMarkers = props.storesToShow.map(store => {
       return new google.maps.Marker({
         position: store.latLng,
         title: store.name,
-        animation: store.id === this.props.currentStore.id ?
+        animation: store.id === props.currentStore.id ?
           google.maps.Animation.BOUNCE : null,
         store
       });
@@ -54,18 +39,21 @@ class GMap extends Component {
     });
   }
 
+  componentWillReceiveProps({ storesToShow, currentStore }) {
+    this.setState({ storesToShow, currentStore });
+  }
+
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.filter !== this.props.filter) {
-      this.renderMarkers(nextProps, nextState);
-    }
+    const hasFilterChanged = nextProps.filter !== this.props.filter ||
+      nextProps.storesToShow.length !== this.props.storesToShow.length;
+
+    if (hasFilterChanged) this.renderMarkers(nextProps, nextState);
 
     if (nextProps.currentStore.title !== this.props.currentStore.title) {
       this.state.markers.forEach(marker => {
         if (marker.store.title === nextProps.currentStore.title) {
           marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-
-        if (marker.store.title === this.props.currentStore.title) {
+        } else {
           marker.setAnimation(null);
         }
       });
@@ -83,11 +71,7 @@ class GMap extends Component {
         zoom: 13
       });
 
-      firebase.database().ref('stores').on('value', snapshot => {
-        this.setState({
-          stores: toArrayStores(snapshot.val())
-        }, () => this.renderMarkers());
-      });
+      this.renderMarkers();
     };
 
     document.body.appendChild(script);

@@ -28,6 +28,14 @@
   padding-right: 10px;
 }
 
+.sidebar-store__field,
+.sidebar-store__type,
+.sidebar-store__hours {
+  padding-left: 10px;
+  font-size: 18px;
+  padding: 5px;
+}
+
 .sidebar-store__text a {
   text-decoration: none;
   color: #00567e;
@@ -40,4 +48,20 @@
 .hours-table td {
   font-size: 16px;
   padding: 0 10px 0 0;
+}
+
+.sidebar-stores-list__store {
+  border-bottom: 1px solid #ccc;
+  background: #f7f7f7;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.sidebar-stores-list__title {
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+  background: #d9e5eb;
 }

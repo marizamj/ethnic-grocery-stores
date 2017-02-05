@@ -17,12 +17,40 @@
   margin-top: 10px;
 }
 
-[name="search"] {
-  top: 13px;
+.search {
+  margin-top: 20px;
   margin-left: 20px;
-  border: none;
-  padding: 5px;
-  outline-color: #ddd;
+  border: 1px solid #999;
+  border-radius: 50px 0 0 50px;
+  border-right: none;
+  height: 40px;
+  width: 80px;
+  padding: 0 0 0 10px;
+  outline: none;
+  transition: 0.5s all ease-out;
+  transition-delay: 0.1s;
+}
+
+.search:focus {
+  width: 300px;
+  padding: 0 0 0 10px;
+  background-image: none;
+  transition: 0.5s all ease;
+  cursor: text;
+  border-right: none;
+  border-radius: 50px 0 0 50px;
+}
+
+.search-btn {
+  margin-top: 20px;
+  width: 40px;
+  height: 40px;
+  background: url('../images/search.png');
+  background-size: contain;
+  border: 1px solid #999;
+  border-radius: 0 50px 50px 0;
+  border-left: none;
+  cursor: pointer;
 }
 
 .search-matches {

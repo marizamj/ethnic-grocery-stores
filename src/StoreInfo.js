@@ -57,7 +57,7 @@ class StoreInfo extends Component {
               result = (<div key={field} className="sidebar-store__field">
                 <span className="sidebar-store__desc">Telephone:</span>
                 <span className="sidebar-store__text">
-                  <a href={`tel:+${this.state.store.telephone}`}>{this.state.store.telephone}</a>
+                  <a href={`tel:${this.state.store.telephone}`}>{this.state.store.telephone}</a>
                 </span>
               </div>);
 

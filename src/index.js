@@ -23,6 +23,7 @@ ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="stores/:id" />
+      <Route path="search/:value" />
       <Route path="about" component={About} />
       <Route path="add-store" component={AddStore} />
     </Route>

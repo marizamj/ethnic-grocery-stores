@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import StoreInfo from './StoreInfo';
+import StoresList from './StoresList';
 import './Sidebar.css';
 
 const PLaceholder = () =>
@@ -11,23 +12,38 @@ const PLaceholder = () =>
 
 class Sidebar extends Component {
   state = {
-    store: this.props.currentStore
+    store: this.props.currentStore,
+    stores: this.props.stores,
+    pathname: this.props.pathname,
+    filter: this.props.filter
   };
 
-  componentWillReceiveProps({ currentStore }) {
-    this.setState({ store: currentStore });
+  componentWillReceiveProps({ currentStore, stores, pathname, filter }) {
+    this.setState({ store: currentStore, stores, pathname, filter });
   }
 
   render() {
+    let elemToRender;
+
+    switch (this.state.pathname.split('/')[1]) {
+      case 'stores':
+        elemToRender = <StoreInfo store={this.state.store} />;
+        break;
+
+      case 'search':
+        elemToRender = <StoresList
+          stores={this.state.stores}
+          filter={this.state.filter}
+        />
+        break;
+
+      default:
+        elemToRender = <PLaceholder />;
+    }
 
     return <div className="sidebar fixed">
 
-      {
-        this.state.store.title ?
-          <StoreInfo store={this.state.store} />
-          :
-          <PLaceholder />
-      }
+      {elemToRender}
 
     </div>
   }

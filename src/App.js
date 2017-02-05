@@ -12,11 +12,12 @@ import Message from './Message';
 class App extends Component {
   state = {
     stores: [],
+    storesToShow: [],
     storeTypes: [],
     currentStore: {},
     user: { email: '' },
     token: null,
-    filter: 'Show all',
+    filter: 'show-all',
     message: {
       show: false,
       text: ''
@@ -39,17 +40,50 @@ class App extends Component {
     const newID = newPath.split('/')[2];
 
     this.setState({ currentStore: this.state.stores.find(store =>
-      store.id === newID) });
+      store.id === newID) || {} });
+  }
+
+  setStoresToShow(newPath) {
+    const searchValue = newPath === '/' ?
+      'show-all'
+      :
+      decodeURIComponent(newPath.split('/')[2]);
+
+    this.setState({ filter: searchValue });
+
+    if (searchValue === 'show-all') {
+      this.setState({ storesToShow: this.state.stores });
+      return;
+    }
+
+    const regex = new RegExp(searchValue, 'i')
+
+    this.setState({
+      storesToShow: this.state.stores.filter(store =>
+        store.type.match(regex) ||
+        store.keywords.match(regex) ||
+        store.title.match(regex) ||
+        store.address.match(regex)
+      )
+    });
+  }
+
+  search(searchValue) {
+    this.props.router.push(`/search/${encodeURIComponent(searchValue)}`);
   }
 
   componentDidMount() {
     loadStoreTypes(storeTypes => this.setState({ storeTypes }));
     authListener(user => this.setState({ user }));
     loadStores(stores => {
-      this.setState({ stores });
+      this.setState({ stores, storesToShow: stores });
 
       if (this.state.pathname.match(/^\/stores\/.+/)) {
         this.setCurrentStore(this.state.pathname);
+      }
+
+      if (this.state.pathname.match(/^\/search\/.+/)) {
+        this.setStoresToShow(this.state.pathname);
       }
     });
 
@@ -80,15 +114,24 @@ class App extends Component {
     if (prevLocation.pathname !== location.pathname) {
       this.setState({ pathname: location.pathname });
 
+      if (location.pathname.match(/^\/search\/.+/) || location.pathname === '/') {
+        this.setStoresToShow(location.pathname);
+      }
+
       if (location.pathname.match(/^\/stores\/.+/)) {
         this.setCurrentStore(location.pathname);
+      } else {
+        this.setCurrentStore('');
+      }
+
+      if (location.pathname.match(/^\/search?\/?.+/)) {
       }
     }
   }
 
   render() {
     return (
-      <div onClick={e => {
+      <div onClick={ e => {
         if (!e.target.classList.contains('popup-name') && !e.target.classList.contains('avatar')) {
           this.setState({ popup: 'hidden' });
         }
@@ -132,17 +175,17 @@ class App extends Component {
             method: 'share',
             href: 'https://ethnic-grocery-stores.firebaseapp.com/',
           }, function(response){});
-        }} onFilterChange={ e => {
-          this.setState({ filter: e.target.value });
         }}
-        popup={this.state.popup}
-        user={this.state.user} token={this.state.token}
-        stores={this.state.stores}
-        storeTypes={this.state.storeTypes} />
+        search={this.search.bind(this)}
+        {...this.state} />
 
-        <Sidebar currentStore={this.state.currentStore} />
+        <Sidebar currentStore={this.state.currentStore}
+          filter={this.state.filter}
+          stores={this.state.storesToShow}
+          pathname={this.state.pathname} />
 
         <GMap filter={this.state.filter}
+          storesToShow={this.state.storesToShow}
           router={this.props.router}
           currentStore={this.state.currentStore} />
 

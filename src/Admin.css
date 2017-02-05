@@ -3,7 +3,6 @@
   box-shadow: -1px 0px 5px 0px #bbb;
   margin-right: -230px;
   transition: 0.5s margin-right ease-out;
-  padding-bottom: 80px;
 }
 
 .admin-opened {
@@ -36,6 +35,9 @@
 .admin-store-title {
   cursor: pointer;
   border-top: 1px solid #ccc;
+  padding-left: 10px;
+  font-size: 18px;
+  padding: 5px;
 }
 
 .admin-store-title__open {
